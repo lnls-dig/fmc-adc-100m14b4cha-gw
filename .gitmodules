@@ -19,3 +19,6 @@
 [submodule "hdl/ip_cores/svec"]
 	path = hdl/ip_cores/svec
 	url = https://ohwr.org/project/svec.git
+[submodule "hdl/ip_cores/general-cores-lnls"]
+	path = hdl/ip_cores/general-cores-lnls
+	url = https://github.com/lnls-dig/general-cores.git
