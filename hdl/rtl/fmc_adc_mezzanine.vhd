@@ -68,6 +68,40 @@ entity fmc_adc_mezzanine is
     wb_ddr_master_i : in  t_wishbone_master_data64_in;
     wb_ddr_master_o : out t_wishbone_master_data64_out;
 
+    -- ADC data aligned with trigger, synch'ed with fs_clk
+    fs_clk_o : out std_logic;
+
+    adc_data_ch3_o : out std_logic_vector(15 downto 0);
+    adc_data_ch2_o : out std_logic_vector(15 downto 0);
+    adc_data_ch1_o : out std_logic_vector(15 downto 0);
+    adc_data_ch0_o : out std_logic_vector(15 downto 0);
+
+    adc_sw_trigger_o       : out std_logic;
+    adc_ext_trigger_o      : out std_logic;
+    adc_aux_time_trigger_o : out std_logic;
+    adc_time_trigger_o     : out std_logic;
+    adc_int4_trigger_o     : out std_logic;
+    adc_int3_trigger_o     : out std_logic;
+    adc_int2_trigger_o     : out std_logic;
+    adc_int1_trigger_o     : out std_logic;
+    adc_pulse_trigger_o    : out std_logic;
+
+    -- ADC data aligned with trigger, synch'ed with sys_clk
+    adc_data_ch3_sys_clk_o : out std_logic_vector(15 downto 0);
+    adc_data_ch2_sys_clk_o : out std_logic_vector(15 downto 0);
+    adc_data_ch1_sys_clk_o : out std_logic_vector(15 downto 0);
+    adc_data_ch0_sys_clk_o : out std_logic_vector(15 downto 0);
+
+    adc_sw_trigger_sys_clk_o       : out std_logic;
+    adc_ext_trigger_sys_clk_o      : out std_logic;
+    adc_aux_time_trigger_sys_clk_o : out std_logic;
+    adc_time_trigger_sys_clk_o     : out std_logic;
+    adc_int4_trigger_sys_clk_o     : out std_logic;
+    adc_int3_trigger_sys_clk_o     : out std_logic;
+    adc_int2_trigger_sys_clk_o     : out std_logic;
+    adc_int1_trigger_sys_clk_o     : out std_logic;
+    adc_pulse_trigger_sys_clk_o    : out std_logic;
+
     -- Interrupts and status
     ddr_wr_fifo_empty_i : in  std_logic;
     trig_irq_o          : out std_logic;
@@ -346,6 +380,38 @@ begin
       wb_ddr_rst_n_i  => wb_ddr_rst_n_i,
       wb_ddr_master_o => wb_ddr_master_o,
       wb_ddr_master_i => wb_ddr_master_i,
+
+      fs_clk_o       => fs_clk_o,
+
+      adc_data_ch3_o => adc_data_ch3_o,
+      adc_data_ch2_o => adc_data_ch2_o,
+      adc_data_ch1_o => adc_data_ch1_o,
+      adc_data_ch0_o => adc_data_ch0_o,
+
+      adc_sw_trigger_o       => adc_sw_trigger_o,
+      adc_ext_trigger_o      => adc_ext_trigger_o,
+      adc_aux_time_trigger_o => adc_aux_time_trigger_o,
+      adc_time_trigger_o     => adc_time_trigger_o,
+      adc_int4_trigger_o     => adc_int4_trigger_o,
+      adc_int3_trigger_o     => adc_int3_trigger_o,
+      adc_int2_trigger_o     => adc_int2_trigger_o,
+      adc_int1_trigger_o     => adc_int1_trigger_o,
+      adc_pulse_trigger_o    => adc_pulse_trigger_o,
+
+      adc_data_ch3_sys_clk_o => adc_data_ch3_sys_clk_o,
+      adc_data_ch2_sys_clk_o => adc_data_ch2_sys_clk_o,
+      adc_data_ch1_sys_clk_o => adc_data_ch1_sys_clk_o,
+      adc_data_ch0_sys_clk_o => adc_data_ch0_sys_clk_o,
+
+      adc_sw_trigger_sys_clk_o       => adc_sw_trigger_sys_clk_o,
+      adc_ext_trigger_sys_clk_o      => adc_ext_trigger_sys_clk_o,
+      adc_aux_time_trigger_sys_clk_o => adc_aux_time_trigger_sys_clk_o,
+      adc_time_trigger_sys_clk_o     => adc_time_trigger_sys_clk_o,
+      adc_int4_trigger_sys_clk_o     => adc_int4_trigger_sys_clk_o,
+      adc_int3_trigger_sys_clk_o     => adc_int3_trigger_sys_clk_o,
+      adc_int2_trigger_sys_clk_o     => adc_int2_trigger_sys_clk_o,
+      adc_int1_trigger_sys_clk_o     => adc_int1_trigger_sys_clk_o,
+      adc_pulse_trigger_sys_clk_o    => adc_pulse_trigger_sys_clk_o,
 
       acq_cfg_ok_o => acq_cfg_ok_o,
 

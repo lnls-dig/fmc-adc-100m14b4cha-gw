@@ -66,6 +66,40 @@ entity fmc_adc_100Ms_core is
     wb_ddr_master_i : in  t_wishbone_master_data64_in;
     wb_ddr_master_o : out t_wishbone_master_data64_out;
 
+    -- ADC data aligned with trigger, synch'ed with fs_clk
+    fs_clk_o : out std_logic;
+
+    adc_data_ch3_o : out std_logic_vector(15 downto 0);
+    adc_data_ch2_o : out std_logic_vector(15 downto 0);
+    adc_data_ch1_o : out std_logic_vector(15 downto 0);
+    adc_data_ch0_o : out std_logic_vector(15 downto 0);
+
+    adc_sw_trigger_o       : out std_logic;
+    adc_ext_trigger_o      : out std_logic;
+    adc_aux_time_trigger_o : out std_logic;
+    adc_time_trigger_o     : out std_logic;
+    adc_int4_trigger_o     : out std_logic;
+    adc_int3_trigger_o     : out std_logic;
+    adc_int2_trigger_o     : out std_logic;
+    adc_int1_trigger_o     : out std_logic;
+    adc_pulse_trigger_o    : out std_logic;
+
+    -- ADC data aligned with trigger, synch'ed with sys_clk
+    adc_data_ch3_sys_clk_o : out std_logic_vector(15 downto 0);
+    adc_data_ch2_sys_clk_o : out std_logic_vector(15 downto 0);
+    adc_data_ch1_sys_clk_o : out std_logic_vector(15 downto 0);
+    adc_data_ch0_sys_clk_o : out std_logic_vector(15 downto 0);
+
+    adc_sw_trigger_sys_clk_o       : out std_logic;
+    adc_ext_trigger_sys_clk_o      : out std_logic;
+    adc_aux_time_trigger_sys_clk_o : out std_logic;
+    adc_time_trigger_sys_clk_o     : out std_logic;
+    adc_int4_trigger_sys_clk_o     : out std_logic;
+    adc_int3_trigger_sys_clk_o     : out std_logic;
+    adc_int2_trigger_sys_clk_o     : out std_logic;
+    adc_int1_trigger_sys_clk_o     : out std_logic;
+    adc_pulse_trigger_sys_clk_o    : out std_logic;
+
     -- Acquisition configuration status flag
     acq_cfg_ok_o : out std_logic;
 
@@ -216,6 +250,7 @@ architecture rtl of fmc_adc_100Ms_core is
   signal aux_time_trig_fixed_delay  : std_logic_vector(g_TRIG_DELAY_SW+2 downto 0);
   signal trig                       : std_logic;
   signal trig_align                 : std_logic_vector(8 downto 0);
+  signal trig_align_sys_clk         : std_logic_vector(8 downto 0);
   signal trig_storage               : std_logic_vector(31 downto 0);
   signal trig_storage_clear         : std_logic;
   signal trig_src_vector            : std_logic_vector(7 downto 0);
@@ -244,6 +279,7 @@ architecture rtl of fmc_adc_100Ms_core is
   signal data_calibr_out_d1 : std_logic_vector(63 downto 0);
   signal data_calibr_out_d2 : std_logic_vector(63 downto 0);
   signal data_calibr_out_d3 : std_logic_vector(63 downto 0);
+  signal data_calibr_out_sys_clk : std_logic_vector(63 downto 0);
   signal sat_val            : std_logic_vector(59 downto 0);
   signal sat_val_in         : std_logic_vector(59 downto 0);
 
@@ -1015,6 +1051,24 @@ begin
   sync_fifo_din(72 downto 64) <= trig_align;
   sync_fifo_din(63 downto 0)  <= data_calibr_out_d3;
 
+  -- Output assignments for acquiring FMC 100M with other modules
+  fs_clk_o <= fs_clk;
+
+  adc_data_ch3_o <= data_calibr_out_d3(63 downto 48);
+  adc_data_ch2_o <= data_calibr_out_d3(47 downto 32);
+  adc_data_ch1_o <= data_calibr_out_d3(31 downto 16);
+  adc_data_ch0_o <= data_calibr_out_d3(15 downto 0);
+
+  adc_sw_trigger_o       <= trig_align(8);
+  adc_ext_trigger_o      <= trig_align(7);
+  adc_aux_time_trigger_o <= trig_align(6);
+  adc_time_trigger_o     <= trig_align(5);
+  adc_int4_trigger_o     <= trig_align(4);
+  adc_int3_trigger_o     <= trig_align(3);
+  adc_int2_trigger_o     <= trig_align(2);
+  adc_int1_trigger_o     <= trig_align(1);
+  adc_pulse_trigger_o    <= trig_align(0);
+
   -- FIFO control
   sync_fifo_wr    <= downsample_en and serdes_synced and (not sync_fifo_full);
   sync_fifo_rd    <= not sync_fifo_empty;
@@ -1023,6 +1077,25 @@ begin
   --============================================================================
   -- System clock domain
   --============================================================================
+
+  trig_align_sys_clk      <= sync_fifo_dout(72 downto 64);
+  data_calibr_out_sys_clk <= sync_fifo_dout(63 downto 0);
+
+  -- Output assignments for acquiring FMC 100M with other modules
+  adc_data_ch3_sys_clk_o <= data_calibr_out_sys_clk(63 downto 48);
+  adc_data_ch2_sys_clk_o <= data_calibr_out_sys_clk(47 downto 32);
+  adc_data_ch1_sys_clk_o <= data_calibr_out_sys_clk(31 downto 16);
+  adc_data_ch0_sys_clk_o <= data_calibr_out_sys_clk(15 downto 0);
+
+  adc_sw_trigger_sys_clk_o       <= trig_align_sys_clk(8);
+  adc_ext_trigger_sys_clk_o      <= trig_align_sys_clk(7);
+  adc_aux_time_trigger_sys_clk_o <= trig_align_sys_clk(6);
+  adc_time_trigger_sys_clk_o     <= trig_align_sys_clk(5);
+  adc_int4_trigger_sys_clk_o     <= trig_align_sys_clk(4);
+  adc_int3_trigger_sys_clk_o     <= trig_align_sys_clk(3);
+  adc_int2_trigger_sys_clk_o     <= trig_align_sys_clk(2);
+  adc_int1_trigger_sys_clk_o     <= trig_align_sys_clk(1);
+  adc_pulse_trigger_sys_clk_o    <= trig_align_sys_clk(0);
 
   ------------------------------------------------------------------------------
   -- Shots counter
