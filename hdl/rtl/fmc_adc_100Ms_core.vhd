@@ -67,7 +67,8 @@ entity fmc_adc_100Ms_core is
     wb_ddr_master_o : out t_wishbone_master_data64_out;
 
     -- ADC data aligned with trigger, synch'ed with fs_clk
-    fs_clk_o : out std_logic;
+    fs_clk_o   : out std_logic;
+    fs_rst_n_o : out std_logic;
 
     adc_data_ch3_o : out std_logic_vector(15 downto 0);
     adc_data_ch2_o : out std_logic_vector(15 downto 0);
@@ -436,6 +437,7 @@ begin
       synced_o => fs_rst_n);
 
   serdes_arst <= not fs_rst_n;
+  fs_rst_n_o  <= fs_rst_n;
 
   ------------------------------------------------------------------------------
   -- Sampinling clock frequency meter
