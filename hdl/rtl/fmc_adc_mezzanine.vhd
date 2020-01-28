@@ -33,6 +33,7 @@ use IEEE.NUMERIC_STD.all;
 
 library work;
 use work.fmc_adc_100Ms_core_pkg.all;
+use work.fmc_adc_mezzanine_pkg.all;
 use work.wishbone_pkg.all;
 use work.timetag_core_regs_pkg.all;
 use work.timetag_core_defs_pkg.all;
@@ -51,6 +52,7 @@ entity fmc_adc_mezzanine is
     -- some systematic delay wrt the actual trigger time
     g_TAG_ADJUST         : natural                        := 24;
     -- WB interface configuration
+    g_WITH_SDB_CROSSBAR  : boolean                        := false;
     g_WB_MODE            : t_wishbone_interface_mode      := PIPELINED;
     g_WB_GRANULARITY     : t_wishbone_address_granularity := BYTE);
   port (
@@ -168,24 +170,13 @@ architecture rtl of fmc_adc_mezzanine is
   -- Constants declaration
   ------------------------------------------------------------------------------
 
-  -- Number of slaves on the wishbone crossbar
-  constant c_NUM_WB_SLAVES : integer := 6;
-
-  -- Wishbone slave(s)
-  constant c_WB_SLAVE_FMC_ADC     : integer := 0;  -- Mezzanine ADC core
-  constant c_WB_SLAVE_FMC_EIC     : integer := 1;  -- Mezzanine interrupt controller
-  constant c_WB_SLAVE_FMC_I2C     : integer := 2;  -- Mezzanine I2C controller
-  constant c_WB_SLAVE_FMC_ONEWIRE : integer := 3;  -- Mezzanine onewire interface
-  constant c_WB_SLAVE_FMC_SPI     : integer := 4;  -- Mezzanine SPI interface
-  constant c_WB_SLAVE_TIMETAG     : integer := 5;  -- Mezzanine timetag core
-
   ------------------------------------------------------------------------------
   -- Signals declaration
   ------------------------------------------------------------------------------
 
   -- Wishbone buse(s) from master(s) to crossbar slave port(s)
-  signal cnx_master_out : t_wishbone_master_out;
-  signal cnx_master_in  : t_wishbone_master_in;
+  signal cnx_master_out : t_wishbone_master_out_array(c_NUM_WB_MASTERS-1 downto 0);
+  signal cnx_master_in  : t_wishbone_master_in_array(c_NUM_WB_MASTERS-1 downto 0);
 
   -- Wishbone buse(s) from crossbar master port(s) to slave(s)
   signal cnx_slave_out : t_wishbone_slave_out_array(c_NUM_WB_SLAVES-1 downto 0);
@@ -259,27 +250,49 @@ begin
       clk_i    => sys_clk_i,
       slave_i  => wb_csr_out,
       slave_o  => wb_csr_in,
-      master_i => cnx_master_in,
-      master_o => cnx_master_out);
+      master_i => cnx_master_in(c_WB_MASTER),
+      master_o => cnx_master_out(c_WB_MASTER));
 
-  cmp_crossbar : entity work.fmc_adc_mezzanine_mmap
-    port map (
-      rst_n_i                  => sys_rst_n_i,
-      clk_i                    => sys_clk_i,
-      wb_i                     => cnx_master_out,
-      wb_o                     => cnx_master_in,
-      fmc_adc_100m_csr_i       => cnx_slave_out(c_WB_SLAVE_FMC_ADC),
-      fmc_adc_100m_csr_o       => cnx_slave_in(c_WB_SLAVE_FMC_ADC),
-      fmc_adc_eic_i            => cnx_slave_out(c_WB_SLAVE_FMC_EIC),
-      fmc_adc_eic_o            => cnx_slave_in(c_WB_SLAVE_FMC_EIC),
-      si570_i2c_master_i       => cnx_slave_out(c_WB_SLAVE_FMC_I2C),
-      si570_i2c_master_o       => cnx_slave_in(c_WB_SLAVE_FMC_I2C),
-      ds18b20_onewire_master_i => cnx_slave_out(c_WB_SLAVE_FMC_ONEWIRE),
-      ds18b20_onewire_master_o => cnx_slave_in(c_WB_SLAVE_FMC_ONEWIRE),
-      fmc_spi_master_i         => cnx_slave_out(c_WB_SLAVE_FMC_SPI),
-      fmc_spi_master_o         => cnx_slave_in(c_WB_SLAVE_FMC_SPI),
-      timetag_core_i           => cnx_slave_out(c_WB_SLAVE_TIMETAG),
-      timetag_core_o           => cnx_slave_in(c_WB_SLAVE_TIMETAG));
+  gen_with_sdb_crossbar : if g_WITH_SDB_CROSSBAR generate
+    cmp_sdb_crossbar : xwb_sdb_crossbar
+      generic map (
+        g_VERBOSE     => FALSE,
+        g_num_masters => c_NUM_WB_MASTERS,
+        g_num_slaves  => c_NUM_WB_SLAVES,
+        g_registered  => TRUE,
+        g_wraparound  => TRUE,
+        g_layout      => c_INTERCONNECT_LAYOUT,
+        g_sdb_wb_mode => PIPELINED,
+        g_sdb_addr    => c_SDB_ADDRESS)
+      port map (
+        clk_sys_i => sys_clk_i,
+        rst_n_i   => sys_rst_n_i,
+        slave_i   => cnx_master_out,
+        slave_o   => cnx_master_in,
+        master_i  => cnx_slave_out,
+        master_o  => cnx_slave_in);
+  end generate;
+
+  gen_without_sdb_crossbar : if not g_WITH_SDB_CROSSBAR generate
+    cmp_crossbar : entity work.fmc_adc_mezzanine_mmap
+      port map (
+        rst_n_i                  => sys_rst_n_i,
+        clk_i                    => sys_clk_i,
+        wb_i                     => cnx_master_out(c_WB_MASTER),
+        wb_o                     => cnx_master_in(c_WB_MASTER),
+        fmc_adc_100m_csr_i       => cnx_slave_out(c_WB_SLAVE_FMC_ADC),
+        fmc_adc_100m_csr_o       => cnx_slave_in(c_WB_SLAVE_FMC_ADC),
+        fmc_adc_eic_i            => cnx_slave_out(c_WB_SLAVE_FMC_EIC),
+        fmc_adc_eic_o            => cnx_slave_in(c_WB_SLAVE_FMC_EIC),
+        si570_i2c_master_i       => cnx_slave_out(c_WB_SLAVE_FMC_I2C),
+        si570_i2c_master_o       => cnx_slave_in(c_WB_SLAVE_FMC_I2C),
+        ds18b20_onewire_master_i => cnx_slave_out(c_WB_SLAVE_FMC_ONEWIRE),
+        ds18b20_onewire_master_o => cnx_slave_in(c_WB_SLAVE_FMC_ONEWIRE),
+        fmc_spi_master_i         => cnx_slave_out(c_WB_SLAVE_FMC_SPI),
+        fmc_spi_master_o         => cnx_slave_in(c_WB_SLAVE_FMC_SPI),
+        timetag_core_i           => cnx_slave_out(c_WB_SLAVE_TIMETAG),
+        timetag_core_o           => cnx_slave_in(c_WB_SLAVE_TIMETAG));
+  end generate;
 
   ------------------------------------------------------------------------------
   -- Mezzanine SPI master

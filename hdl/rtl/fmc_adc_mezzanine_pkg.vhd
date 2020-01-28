@@ -40,6 +40,92 @@ use work.wishbone_pkg.all;
 package fmc_adc_mezzanine_pkg is
 
   ------------------------------------------------------------------------------
+  -- Constants declaration
+  ------------------------------------------------------------------------------
+
+  -- Number of masters on the wishbone crossbar
+  constant c_NUM_WB_MASTERS : integer := 1;
+
+  -- Number of slaves on the wishbone crossbar
+  constant c_NUM_WB_SLAVES : integer := 6;
+
+  -- Wishbone master(s)
+  constant c_WB_MASTER : integer := 0;
+
+  -- Wishbone slave(s)
+  constant c_WB_SLAVE_FMC_ADC     : integer := 0;  -- Mezzanine ADC core
+  constant c_WB_SLAVE_FMC_EIC     : integer := 1;  -- Mezzanine interrupt controller
+  constant c_WB_SLAVE_FMC_I2C     : integer := 2;  -- Mezzanine I2C controller
+  constant c_WB_SLAVE_FMC_ONEWIRE : integer := 3;  -- Mezzanine onewire interface
+  constant c_WB_SLAVE_FMC_SPI     : integer := 4;  -- Mezzanine SPI interface
+  constant c_WB_SLAVE_TIMETAG     : integer := 5;  -- Mezzanine timetag core
+
+  -- Devices sdb description
+  constant c_wb_adc_csr_sdb : t_sdb_device := (
+    abi_class     => x"0000",                     -- undocumented device
+    abi_ver_major => x"01",
+    abi_ver_minor => x"01",
+    wbd_endian    => c_sdb_endian_big,
+    wbd_width     => x"4",                        -- 32-bit port granularity
+    sdb_component => (
+      addr_first  => x"0000000000000000",
+      addr_last   => x"00000000000003FF",
+      product     => (
+        vendor_id => x"000000000000CE42",         -- CERN
+        device_id => x"00000608",
+        version   => x"00000001",
+        date      => x"20121116",
+        name      => "WB-FMC-ADC-Core    ")));
+
+  constant c_wb_timetag_sdb : t_sdb_device := (
+    abi_class     => x"0000",                     -- undocumented device
+    abi_ver_major => x"01",
+    abi_ver_minor => x"01",
+    wbd_endian    => c_sdb_endian_big,
+    wbd_width     => x"4",                        -- 32-bit port granularity
+    sdb_component => (
+      addr_first  => x"0000000000000000",
+      addr_last   => x"000000000000007F",
+      product     => (
+        vendor_id => x"000000000000CE42",         -- CERN
+        device_id => x"00000604",
+        version   => x"00000001",
+        date      => x"20121116",
+        name      => "WB-Timetag-Core    ")));
+
+  constant c_wb_fmc_adc_eic_sdb : t_sdb_device := (
+    abi_class     => x"0000",                     -- undocumented device
+    abi_ver_major => x"01",
+    abi_ver_minor => x"01",
+    wbd_endian    => c_sdb_endian_big,
+    wbd_width     => x"4",                        -- 32-bit port granularity
+    sdb_component => (
+      addr_first  => x"0000000000000000",
+      addr_last   => x"000000000000000F",
+      product     => (
+        vendor_id => x"000000000000CE42",         -- CERN
+        device_id => x"26ec6086",                 -- "WB-FMC-ADC.EIC     " | md5sum | cut -c1-8
+        version   => x"00000001",
+        date      => x"20131204",
+        name      => "WB-FMC-ADC.EIC     ")));
+
+  -- Wishbone crossbar layout
+  constant c_INTERCONNECT_LAYOUT_RAW : t_sdb_record_array(c_NUM_WB_SLAVES - 1 downto 0) :=
+    (
+      c_WB_SLAVE_FMC_ADC     => f_sdb_auto_device(c_wb_adc_csr_sdb,             true),
+      c_WB_SLAVE_FMC_EIC     => f_sdb_auto_device(c_wb_fmc_adc_eic_sdb,         true),
+      c_WB_SLAVE_FMC_I2C     => f_sdb_auto_device(c_xwb_i2c_master_sdb,         true),
+      c_WB_SLAVE_FMC_ONEWIRE => f_sdb_auto_device(c_xwb_onewire_master_sdb,     true),
+      c_WB_SLAVE_FMC_SPI     => f_sdb_auto_device(c_xwb_spi_sdb,                true),
+      c_WB_SLAVE_TIMETAG     => f_sdb_auto_device(c_wb_timetag_sdb,             true)
+    );
+
+  -- sdb header address
+  constant c_INTERCONNECT_LAYOUT  : t_sdb_record_array := f_sdb_auto_layout(c_INTERCONNECT_LAYOUT_RAW);
+  constant c_SDB_ADDRESS          : t_wishbone_address := f_sdb_auto_sdb   (c_INTERCONNECT_LAYOUT_RAW);
+  constant c_FMC_100M_BRIDGE_SDB  : t_sdb_bridge       := f_xwb_bridge_layout_sdb(true, c_INTERCONNECT_LAYOUT, c_SDB_ADDRESS);
+
+  ------------------------------------------------------------------------------
   -- Components declaration
   ------------------------------------------------------------------------------
   component fmc_adc_mezzanine
@@ -56,6 +142,7 @@ package fmc_adc_mezzanine_pkg is
       -- some systematic delay wrt the actual trigger time
       g_TAG_ADJUST         : natural                        := 24;
       -- WB interface configuration
+      g_WITH_SDB_CROSSBAR  : boolean                        := false;
       g_WB_MODE            : t_wishbone_interface_mode      := PIPELINED;
       g_WB_GRANULARITY     : t_wishbone_address_granularity := BYTE);
     port (
