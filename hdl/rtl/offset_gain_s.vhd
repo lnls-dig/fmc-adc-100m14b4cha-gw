@@ -56,6 +56,9 @@ use UNISIM.vcomponents.all;
 library UNIMACRO;
 use UNIMACRO.vcomponents.all;
 
+library work;
+-- Platfrrm specific primitives
+use work.platform_specific_pkg.all;
 
 ------------------------------------------------------------------------------
 -- Entity declaration
@@ -125,22 +128,18 @@ begin
   ------------------------------------------------------------------------------
   -- Multiple input data + offset by gain
   ------------------------------------------------------------------------------
-  -- MULT_MACRO: Multiply Function implemented in a DSP48E
-  -- Xilinx HDL Libraries Guide, version 12.4
-  ------------------------------------------------------------------------------
-  cmp_multiplier : MULT_MACRO
+  cmp_multiplier : platform_multiplier
     generic map (
-      DEVICE  => "SPARTAN6",            -- Target Device: "VIRTEX5", "VIRTEX6", "SPARTAN6"
-      LATENCY => 0,                     -- Desired clock cycle latency, 0-4
-      WIDTH_A => 18,                    -- Multiplier A-input bus width, 1-25
-      WIDTH_B => 18)                    -- Multiplier B-input bus width, 1-18
+      g_LATENCY => 0,                     -- Desired clock cycle latency, 0-4
+      g_WIDTH_A => 18,                    -- Multiplier A-input bus width, 1-25
+      g_WIDTH_B => 18)                    -- Multiplier B-input bus width, 1-18
     port map (
-      P   => product_t,                 -- Multiplier ouput, WIDTH_A+WIDTH_B
-      A   => gain,                      -- Multiplier input A, WIDTH_A
-      B   => data_offset,               -- Multiplier input B, WIDTH_B
-      CE  => '1',                       -- 1-bit active high input clock enable
-      CLK => clk_i,                     -- 1-bit positive edge clock input
-      RST => rst                        -- 1-bit input active high reset
+      product_o   => product_t,                 -- Multiplier ouput, WIDTH_A+WIDTH_B
+      a_i         => gain,                      -- Multiplier input A, WIDTH_A
+      b_i         => data_offset,               -- Multiplier input B, WIDTH_B
+      ce_i        => '1',                       -- 1-bit active high input clock enable
+      clk_i       => clk_i,                     -- 1-bit positive edge clock input
+      rst_i       => rst                        -- 1-bit input active high reset
       );
 
   -- Additional register stage to solve timing issues
