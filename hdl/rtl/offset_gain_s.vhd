@@ -42,19 +42,12 @@
 --------------------------------------------------------------------------------
 -- last changes: see svn log.
 --------------------------------------------------------------------------------
--- TODO: - 
+-- TODO: -
 --------------------------------------------------------------------------------
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
-
-
-library UNISIM;
-use UNISIM.vcomponents.all;
-
-library UNIMACRO;
-use UNIMACRO.vcomponents.all;
 
 library work;
 -- Platfrrm specific primitives
