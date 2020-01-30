@@ -69,7 +69,7 @@ entity ltc2174_2l16b_receiver is
     -- ADC divided clock, for FPGA logic
     adc_clk_o       : out std_logic);
 
-end entity ltc2174_2l16b_receiver;
+end ltc2174_2l16b_receiver;
 
 architecture arch of ltc2174_2l16b_receiver is
 
@@ -209,10 +209,16 @@ begin  -- architecture arch
           DO       => open,
           DRDY     => open,
           PWRDWN   => '0',
+          DADDR    => "0000000",
+          DCLK     => '0',
+          DEN      => '0',
+          DI       => X"0000",
+          DWE      => '0',
           LOCKED   => pll_locked,
           CLKFBIN  => pll_clkfbin,
           CLKIN1   => pll_clkin,
           CLKIN2   => '0',
+          CLKINSEL => '1',
           RST      => '0');
 
     end generate gen_pll;
@@ -227,7 +233,7 @@ begin  -- architecture arch
           CLKFBOUT_MULT_F     => 2.000,
           CLKIN1_PERIOD       => 2.5,
           CLKOUT0_DIVIDE_F    => 8.000,
-          CLKOUT1_DIVIDE_F    => 1,
+          CLKOUT1_DIVIDE      => 1,
           COMPENSATION        => "ZHOLD",
           DIVCLK_DIVIDE       => 1,
           REF_JITTER1         => 0.01)
@@ -242,10 +248,19 @@ begin  -- architecture arch
           DO       => open,
           DRDY     => open,
           PWRDWN   => '0',
+          DADDR    => "0000000",
+          DCLK     => '0',
+          DEN      => '0',
+          DI       => X"0000",
+          DWE      => '0',
+          PSCLK    => '0',
+          PSEN     => '0',
+          PSINCDEC => '0',
           LOCKED   => pll_locked,
           CLKFBIN  => pll_clkfbin,
           CLKIN1   => pll_clkin,
           CLKIN2   => '0',
+          CLKINSEL => '1',
           RST      => '0');
 
     end generate gen_mmcm;
@@ -296,10 +311,16 @@ begin  -- architecture arch
           DO       => open,
           DRDY     => open,
           PWRDWN   => '0',
+          DADDR    => "0000000",
+          DCLK     => '0',
+          DEN      => '0',
+          DI       => X"0000",
+          DWE      => '0',
           LOCKED   => pll_locked,
           CLKFBIN  => pll_clkfbin,
           CLKIN1   => pll_clkin,
           CLKIN2   => '0',
+          CLKINSEL => '1',
           RST      => '0');
 
     end generate gen_pll;
@@ -328,10 +349,19 @@ begin  -- architecture arch
           DO       => open,
           DRDY     => open,
           PWRDWN   => '0',
+          DADDR    => "0000000",
+          DCLK     => '0',
+          DEN      => '0',
+          DI       => X"0000",
+          DWE      => '0',
+          PSCLK    => '0',
+          PSEN     => '0',
+          PSINCDEC => '0',
           LOCKED   => pll_locked,
           CLKFBIN  => pll_clkfbin,
           CLKIN1   => pll_clkin,
           CLKIN2   => '0',
+          CLKINSEL => '1',
           RST      => '0');
 
     end generate gen_mmcm;
@@ -395,7 +425,7 @@ begin  -- architecture arch
         CE  => '1',
         CLR => '0',
         O => clk_div_buf);
-  end generate gen_mmcm_parallel_clk_bufr;
+  end generate gen_mmcm_parallel_clk_bufio;
 
   gen_mmcm_parallel_clk_bufh : if g_PARALLEL_CLK_BUF = "BUFH" generate
     cmp_bufh : BUFH
