@@ -92,3 +92,4 @@ planAhead_run_*/
 *project.tcl
 *files.tcl
 *synthesis_descriptor_pkg.vhd
+*.xpr
