@@ -23,6 +23,9 @@ use ieee.numeric_std.all;
 library unisim;
 use unisim.vcomponents.all;
 
+library unimacro;
+use unimacro.vcomponents.all;
+
 entity platform_multiplier is
   generic (
     g_LATENCY : natural := 0;                                           -- Desired clock cycle latency, 0-4
