@@ -41,8 +41,27 @@ set fmc1_fs_clk_period                            [get_property PERIOD [get_cloc
 ##                              CDC                                  ##
 #######################################################################
 
-# Synchronizer FF
+# Synchronizer FF. Set the internal path of synchronizer to be very near each other,
+# even though the ASYNC_REG property would take care of this
 set_max_delay -datapath_only -from               [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_*_mezzanine/*/cmp_ext_trig_sync/gc_sync_ffs_in}]  1.5 ns
+
+# CDC between Wishbone clock and FS clocks
+# These are slow control registers taken care of synched by FFs.
+# Give it 1x destination clock. Could be 2x, but lets keep things tight.
+set_max_delay -datapath_only -from               [get_clocks clk_sys] -to [get_clocks fmc0_fs_clk]    $fmc0_fs_clk_period
+set_max_delay -datapath_only -from               [get_clocks clk_sys] -to [get_clocks fmc1_fs_clk]    $fmc1_fs_clk_period
+
+# CDC between Clk Aux (trigger clock) and FS clocks
+# These are using pulse_synchronizer2 which is a full feedback sync.
+# Give it 1x destination clock.
+set_max_delay -datapath_only -from               [get_clocks clk_aux] -to [get_clocks fmc0_fs_clk]    $fmc0_fs_clk_period
+set_max_delay -datapath_only -from               [get_clocks clk_aux] -to [get_clocks fmc1_fs_clk]    $fmc1_fs_clk_period
+
+# CDC between FS clocks and Clk Aux (trigger clock)
+# These are using pulse_synchronizer2 which is a full feedback sync.
+# Give it 1x destination clock.
+set_max_delay -datapath_only -from               [get_clocks fmc0_fs_clk] -to [get_clocks clk_aux]    $clk_aux_period
+set_max_delay -datapath_only -from               [get_clocks fmc1_fs_clk] -to [get_clocks clk_aux]    $clk_aux_period
 
 #######################################################################
 ##                      Placement Constraints                        ##
