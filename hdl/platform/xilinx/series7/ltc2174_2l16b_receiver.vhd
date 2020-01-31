@@ -34,7 +34,7 @@ entity ltc2174_2l16b_receiver is
     -- DDR should be used is the combination og g_SERIAL_CLK_BUF + g_PARALLEL_CLK_BUF
     -- for SDR does not meet the requirements. See XAPP585 (v1.1.2) July 18, 2018,
     -- table 2, page 3, for the maximum rates on each mode
-    g_USE_SDR              : boolean := TRUE;
+    g_USE_SDR              : boolean := FALSE;
     -- Buffer Types. For appropriate selection see XAPP585 (v1.1.2) July 18, 2018
     -- table 2, page 3. The fastest clock possible for SDR is the combination of
     -- BUFIO for serial clock + BUFR for parallel clock.
@@ -297,13 +297,14 @@ begin  -- architecture arch
           CLKFBOUT_MULT       => 2,
           CLKIN1_PERIOD       => 2.5,
           CLKOUT0_DIVIDE      => 16,
+          CLKOUT1_DIVIDE      => 2,
           COMPENSATION        => "ZHOLD",
           DIVCLK_DIVIDE       => 1,
           REF_JITTER1         => 0.01)
         port map (
           CLKFBOUT => pll_clkfbout,
           CLKOUT0  => pll_clkout0,
-          CLKOUT1  => open,
+          CLKOUT1  => pll_clkout1,
           CLKOUT2  => open,
           CLKOUT3  => open,
           CLKOUT4  => open,
@@ -335,13 +336,14 @@ begin  -- architecture arch
           CLKFBOUT_MULT_F     => 2.000,
           CLKIN1_PERIOD       => 2.5,
           CLKOUT0_DIVIDE_F    => 16.000,
+          CLKOUT1_DIVIDE      => 1,
           COMPENSATION        => "ZHOLD",
           DIVCLK_DIVIDE       => 1,
           REF_JITTER1         => 0.01)
         port map (
           CLKFBOUT => pll_clkfbout,
           CLKOUT0  => pll_clkout0,
-          CLKOUT1  => open,
+          CLKOUT1  => pll_clkout1,
           CLKOUT2  => open,
           CLKOUT3  => open,
           CLKOUT4  => open,
@@ -366,10 +368,26 @@ begin  -- architecture arch
 
     end generate gen_mmcm;
 
-    -- For DDR scheme just get the clkfbout and clkfbin as
-    -- SERDES clock
-    clk_serdes_pre <= pll_clkfbout;
-    pll_clkfbin    <= clk_serdes_buf;
+    -- We can't use BUFIO for feedback clock, so if serial_clock if BUFIO,
+    -- use a BUFG for that.
+    gen_bufg_fb_clk : if g_SERIAL_CLK_BUF = "BUFIO" generate
+      cmp_fb_bufg : BUFG
+        port map (
+          I => pll_clkfbout,
+          O => pll_clkfbin);
+
+      clk_serdes_pre <= pll_clkout1;
+      -- clk_serdes_buf is not used in DDR scheme
+    end generate gen_bufg_fb_clk;
+
+    -- If not BUFIO dor DDR clock we can save one BUFG and use the same
+    -- buffer for feedback and driving logic
+    gen_other_fb_clk : if g_SERIAL_CLK_BUF /= "BUFIO" generate
+      -- For DDR scheme just get the clkfbout and clkfbin as
+      -- SERDES clock
+      clk_serdes_pre <= pll_clkfbout;
+      pll_clkfbin    <= clk_serdes_buf;
+  end generate gen_other_fb_clk;
 
   end generate gen_ddr_clks;
 
