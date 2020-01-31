@@ -43,7 +43,7 @@ set fmc1_fs_clk_period                            [get_property PERIOD [get_cloc
 
 # Synchronizer FF. Set the internal path of synchronizer to be very near each other,
 # even though the ASYNC_REG property would take care of this
-set_max_delay -datapath_only -from               [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_*_mezzanine/*/cmp_ext_trig_sync/gc_sync_ffs_in}]  1.5 ns
+set_max_delay -datapath_only -from               [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_*_mezzanine/*/cmp_ext_trig_sync/gc_sync_ffs_in}]  1.5
 
 # CDC between Wishbone clock and FS clocks
 # These are slow control registers taken care of synched by FFs.
