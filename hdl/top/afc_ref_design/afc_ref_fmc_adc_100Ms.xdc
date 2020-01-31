@@ -19,7 +19,7 @@ create_clock -period 2.500 -name fmc0_adc_dco_p_i [get_ports fmc0_adc_dco_p_i]
 # 3. This pin will be probably the Q pin of the driving FF, but for a timing,
 #     analysis we want a valid startpoint. So, we get only this by using the all_fanin
 #     command
-create_generated_clock -name fmc0_fs_clk          [all_fanin -flat -startpoints_only [get_pins -of_objects [get_nets -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/fs_clk}]] -filter {IS_LEAF && (DIRECTION == "OUT")}]
+create_generated_clock -name fmc0_fs_clk          [all_fanin -flat -startpoints_only [get_pins -of_objects [get_nets -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/fs_clk}]]]
 set fmc0_fs_clk_period                            [get_property PERIOD [get_clocks fmc0_fs_clk]]
 
 # FMC 1 clock
@@ -34,7 +34,7 @@ create_clock -period 2.500 -name fmc1_adc_dco_p_i [get_ports fmc1_adc_dco_p_i]
 # 3. This pin will be probably the Q pin of the driving FF, but for a timing,
 #     analysis we want a valid startpoint. So, we get only this by using the all_fanin
 #     command
-create_generated_clock -name fmc1_fs_clk          [all_fanin -flat -startpoints_only [get_pins -of_objects [get_nets -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/fs_clk}]] -filter {IS_LEAF && (DIRECTION == "OUT")}]
+create_generated_clock -name fmc1_fs_clk          [all_fanin -flat -startpoints_only [get_pins -of_objects [get_nets -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/fs_clk}]]]
 set fmc1_fs_clk_period                            [get_property PERIOD [get_clocks fmc1_fs_clk]]
 
 #######################################################################
