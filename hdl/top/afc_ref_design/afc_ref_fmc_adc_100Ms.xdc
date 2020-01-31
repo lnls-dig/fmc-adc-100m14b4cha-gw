@@ -51,6 +51,9 @@ set_max_delay -datapath_only -from               [get_cells -hier -filter {NAME 
 set_max_delay -datapath_only -from               [get_clocks clk_sys] -to [get_clocks fmc0_fs_clk]    $fmc0_fs_clk_period
 set_max_delay -datapath_only -from               [get_clocks clk_sys] -to [get_clocks fmc1_fs_clk]    $fmc1_fs_clk_period
 
+set_max_delay -datapath_only -from               [get_clocks fmc0_fs_clk]    -to [get_clocks clk_sys] $clk_sys_period
+set_max_delay -datapath_only -from               [get_clocks fmc1_fs_clk]    -to [get_clocks clk_sys] $clk_sys_period
+
 # CDC between Clk Aux (trigger clock) and FS clocks
 # These are using pulse_synchronizer2 which is a full feedback sync.
 # Give it 1x destination clock.
