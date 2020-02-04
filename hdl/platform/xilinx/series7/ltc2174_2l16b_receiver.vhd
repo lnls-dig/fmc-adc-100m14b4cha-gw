@@ -336,7 +336,7 @@ begin  -- architecture arch
           CLKFBOUT_MULT_F     => 2.000,
           CLKIN1_PERIOD       => 2.5,
           CLKOUT0_DIVIDE_F    => 16.000,
-          CLKOUT1_DIVIDE      => 1,
+          CLKOUT1_DIVIDE      => 2,
           COMPENSATION        => "ZHOLD",
           DIVCLK_DIVIDE       => 1,
           REF_JITTER1         => 0.01)
