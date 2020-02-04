@@ -29,7 +29,7 @@ package platform_specific_pkg is
       -- DDR should be used is the combination og g_SERIAL_CLK_BUF + g_PARALLEL_CLK_BUF
       -- for SDR does not meet the requirements. See XAPP585 (v1.1.2) July 18, 2018,
       -- table 2, page 3, for the maximum rates on each mode
-      g_USE_SDR              : boolean := TRUE;
+      g_USE_SDR              : boolean := FALSE;
       -- Buffer Types. For appropriate selection see XAPP585 (v1.1.2) July 18, 2018
       -- table 2, page 3. The fastest clock possible for SDR is the combination of
       -- BUFIO for serial clock + BUFR for parallel clock.
