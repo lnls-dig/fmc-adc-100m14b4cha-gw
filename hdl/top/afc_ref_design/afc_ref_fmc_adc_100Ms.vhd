@@ -411,6 +411,10 @@ begin
 
   cmp_afc_base_acq : afc_base_acq
     generic map (
+      g_DIVCLK_DIVIDE                          => 1,
+      g_CLKBOUT_MULT_F                         => 8,
+      g_CLK0_DIVIDE_F                          => 8, -- Can be anything > 100MHz in th ecase of the FMC-ADC-100M
+      g_CLK1_DIVIDE                            => 5, -- Must be 200 MHz
       --  If true, instantiate a VIC/UART/DIAG/SPI.
       g_WITH_VIC                               => true,
       g_WITH_UART_MASTER                       => true,
