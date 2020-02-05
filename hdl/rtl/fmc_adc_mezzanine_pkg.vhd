@@ -112,17 +112,19 @@ package fmc_adc_mezzanine_pkg is
   -- Wishbone crossbar layout
   constant c_INTERCONNECT_LAYOUT_RAW : t_sdb_record_array(c_NUM_WB_SLAVES - 1 downto 0) :=
     (
-      c_WB_SLAVE_FMC_ADC     => f_sdb_auto_device(c_wb_adc_csr_sdb,             true),
-      c_WB_SLAVE_FMC_EIC     => f_sdb_auto_device(c_wb_fmc_adc_eic_sdb,         true),
-      c_WB_SLAVE_FMC_I2C     => f_sdb_auto_device(c_xwb_i2c_master_sdb,         true),
-      c_WB_SLAVE_FMC_ONEWIRE => f_sdb_auto_device(c_xwb_onewire_master_sdb,     true),
-      c_WB_SLAVE_FMC_SPI     => f_sdb_auto_device(c_xwb_spi_sdb,                true),
-      c_WB_SLAVE_TIMETAG     => f_sdb_auto_device(c_wb_timetag_sdb,             true)
+      c_WB_SLAVE_FMC_ADC     => f_sdb_embed_device(c_wb_adc_csr_sdb,             x"00000000"),
+      c_WB_SLAVE_FMC_EIC     => f_sdb_embed_device(c_wb_fmc_adc_eic_sdb,         x"00000400"),
+      c_WB_SLAVE_FMC_I2C     => f_sdb_embed_device(c_xwb_i2c_master_sdb,         x"00000500"),
+      c_WB_SLAVE_FMC_ONEWIRE => f_sdb_embed_device(c_xwb_onewire_master_sdb,     x"00000600"),
+      c_WB_SLAVE_FMC_SPI     => f_sdb_embed_device(c_xwb_spi_sdb,                x"00000700"),
+      c_WB_SLAVE_TIMETAG     => f_sdb_embed_device(c_wb_timetag_sdb,             x"00000800")
     );
 
   -- sdb header address
-  constant c_INTERCONNECT_LAYOUT  : t_sdb_record_array := f_sdb_auto_layout(c_INTERCONNECT_LAYOUT_RAW);
-  constant c_SDB_ADDRESS          : t_wishbone_address := f_sdb_auto_sdb   (c_INTERCONNECT_LAYOUT_RAW);
+  --constant c_INTERCONNECT_LAYOUT  : t_sdb_record_array := f_sdb_auto_layout(c_INTERCONNECT_LAYOUT_RAW);
+  constant c_INTERCONNECT_LAYOUT  : t_sdb_record_array := c_INTERCONNECT_LAYOUT_RAW;
+  --constant c_SDB_ADDRESS          : t_wishbone_address := f_sdb_auto_sdb   (c_INTERCONNECT_LAYOUT_RAW);
+  constant c_SDB_ADDRESS          : t_wishbone_address := x"00000A00";
   constant c_FMC_100M_BRIDGE_SDB  : t_sdb_bridge       := f_xwb_bridge_layout_sdb(true, c_INTERCONNECT_LAYOUT, c_SDB_ADDRESS);
 
   ------------------------------------------------------------------------------
