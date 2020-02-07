@@ -296,7 +296,7 @@ begin  -- architecture arch
           -- uses DDR reception scheme and we want SERDES to operate on DDR.
           CLKFBOUT_MULT       => 2,
           CLKIN1_PERIOD       => 2.5,
-          CLKOUT0_DIVIDE      => 16,
+          CLKOUT0_DIVIDE      => 8,
           CLKOUT1_DIVIDE      => 2,
           COMPENSATION        => "ZHOLD",
           DIVCLK_DIVIDE       => 1,
@@ -335,7 +335,7 @@ begin  -- architecture arch
           -- uses DDR reception scheme and we want SERDES to operate on DDR.
           CLKFBOUT_MULT_F     => 2.000,
           CLKIN1_PERIOD       => 2.5,
-          CLKOUT0_DIVIDE_F    => 16.000,
+          CLKOUT0_DIVIDE_F    => 8.000,
           CLKOUT1_DIVIDE      => 2,
           COMPENSATION        => "ZHOLD",
           DIVCLK_DIVIDE       => 1,
