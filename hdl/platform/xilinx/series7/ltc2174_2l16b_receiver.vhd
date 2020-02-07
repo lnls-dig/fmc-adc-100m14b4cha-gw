@@ -514,7 +514,7 @@ begin  -- architecture arch
         DATA_RATE      => f_data_rate_sel(g_USE_SDR),
         DATA_WIDTH     => 8,
         INTERFACE_TYPE => "NETWORKING",
-        IOBDELAY       => "IFD",
+        IOBDELAY       => "IBUF",
         SERDES_MODE    => "MASTER")
       port map (
         D            => serdes_serial_in(I),
