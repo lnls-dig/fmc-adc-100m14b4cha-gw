@@ -384,6 +384,7 @@ architecture top of afc_ref_fmc_adc_100Ms is
 
   signal clk_sys                             : std_logic;
   signal clk_sys_rstn                        : std_logic;
+  signal clk_sys_rst                         : std_logic;
   signal clk_aux                             : std_logic;
   signal clk_aux_rstn                        : std_logic;
   signal clk_200mhz                          : std_logic;
@@ -602,6 +603,19 @@ begin
     user_wb_in(c_slv_fmc_adc_100m_core_ids(i)) <= wb_fmc_master_in(i);
 
   end generate;
+
+  ----------------------------------------------------------------------
+  --                     IDELAYCTRL for FMC ADCs                      --
+  ----------------------------------------------------------------------
+
+  cmp_idelayctrl : idelayctrl
+  port map(
+    rst                                     => clk_sys_rst,
+    refclk                                  => clk_200mhz,
+    rdy                                     => open
+  );
+
+  clk_sys_rst <= not clk_sys_rstn;
 
   ----------------------------------------------------------------------
   --                          FMC 0 ADC 100Ms                         --
