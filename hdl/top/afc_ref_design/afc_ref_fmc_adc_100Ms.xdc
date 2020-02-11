@@ -101,8 +101,6 @@ set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [ge
 ##                          DELAYS grouping                          ##
 #######################################################################
 
-# Constraint all IDELAY blocks to the same IDELAY control as the DDR 3, so the tool will replicate it as needed
-set_property IODELAY_GROUP DDR_CORE_IODELAY_MIG0 [get_cells -hier -filter {NAME =~ *cmp_idelayctrl}]
 
 #######################################################################
 ##                              CDC                                  ##
