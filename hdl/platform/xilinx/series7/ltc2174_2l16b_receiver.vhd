@@ -41,7 +41,7 @@ entity ltc2174_2l16b_receiver is
     -- Buffer type for serial clock. Options are : BUFG, BUFIO, BUFH and BUFR
     g_SERIAL_CLK_BUF       : string := "BUFIO";
     -- Buffer type for serial clock. Options are : BUFG, BUFH and BUFR
-    g_PARALLEL_CLK_BUF     : string := "BUFG");
+    g_PARALLEL_CLK_BUF     : string := "BUFR");
   port (
     -- ADC data clock
     adc_dco_p_i     : in  std_logic;
