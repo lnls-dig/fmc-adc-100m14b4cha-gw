@@ -440,70 +440,36 @@ begin  -- architecture arch
           CLKINSEL => '1',
           RST      => '0');
 
+      -- We can't use BUFIO for feedback clock, so if serial_clock if BUFIO,
+      -- use a BUFG for that.
+      gen_bufg_fb_clk : if g_SERIAL_CLK_BUF = "BUFIO" generate
+        cmp_fb_bufg : BUFG
+          port map (
+            I => pll_clkfbout,
+            O => pll_clkfbin);
+
+        clk_serdes_pre <= pll_clkout1;
+        -- clk_serdes_buf is not used in DDR scheme
+      end generate gen_bufg_fb_clk;
+
+      -- If not BUFIO dor DDR clock we can save one BUFG and use the same
+      -- buffer for feedback and driving logic
+      gen_other_fb_clk : if g_SERIAL_CLK_BUF /= "BUFIO" generate
+        -- For DDR scheme just get the clkfbout and clkfbin as
+        -- SERDES clock
+        clk_serdes_pre <= pll_clkfbout;
+        pll_clkfbin    <= clk_serdes_buf;
+      end generate gen_other_fb_clk;
+
     end generate gen_pll;
 
-    gen_mmcm : if not g_USE_PLL generate
+    gen_no_mmcm : if not g_USE_PLL generate
 
-      cmp_dco_mmcm : MMCME2_ADV
-        generic map(
-          BANDWIDTH           => "OPTIMIZED",
-          -- We multiply the incoming clock by 2 and divide by 16, because LTC2174
-          -- uses DDR reception scheme and we want SERDES to operate on DDR.
-          CLKFBOUT_MULT_F     => 2.000,
-          CLKIN1_PERIOD       => 2.5,
-          CLKOUT0_DIVIDE_F    => 8.000,
-          CLKOUT1_DIVIDE      => 2,
-          COMPENSATION        => "ZHOLD",
-          DIVCLK_DIVIDE       => 1,
-          REF_JITTER1         => 0.01)
-        port map (
-          CLKFBOUT => pll_clkfbout,
-          CLKOUT0  => pll_clkout0,
-          CLKOUT1  => pll_clkout1,
-          CLKOUT2  => open,
-          CLKOUT3  => open,
-          CLKOUT4  => open,
-          CLKOUT5  => open,
-          DO       => open,
-          DRDY     => open,
-          PWRDWN   => '0',
-          DADDR    => "0000000",
-          DCLK     => '0',
-          DEN      => '0',
-          DI       => X"0000",
-          DWE      => '0',
-          PSCLK    => '0',
-          PSEN     => '0',
-          PSINCDEC => '0',
-          LOCKED   => pll_locked,
-          CLKFBIN  => pll_clkfbin,
-          CLKIN1   => pll_clkin,
-          CLKIN2   => '0',
-          CLKINSEL => '1',
-          RST      => '0');
+      clk_serdes_pre <= pll_clkin;
+      pll_clkout0 <= pll_clkin;
+      pll_locked <= '1';
 
-    end generate gen_mmcm;
-
-    -- We can't use BUFIO for feedback clock, so if serial_clock if BUFIO,
-    -- use a BUFG for that.
-    gen_bufg_fb_clk : if g_SERIAL_CLK_BUF = "BUFIO" generate
-      cmp_fb_bufg : BUFG
-        port map (
-          I => pll_clkfbout,
-          O => pll_clkfbin);
-
-      clk_serdes_pre <= pll_clkout1;
-      -- clk_serdes_buf is not used in DDR scheme
-    end generate gen_bufg_fb_clk;
-
-    -- If not BUFIO dor DDR clock we can save one BUFG and use the same
-    -- buffer for feedback and driving logic
-    gen_other_fb_clk : if g_SERIAL_CLK_BUF /= "BUFIO" generate
-      -- For DDR scheme just get the clkfbout and clkfbin as
-      -- SERDES clock
-      clk_serdes_pre <= pll_clkfbout;
-      pll_clkfbin    <= clk_serdes_buf;
-  end generate gen_other_fb_clk;
+    end generate gen_no_mmcm;
 
   end generate gen_ddr_clks;
 
@@ -543,30 +509,49 @@ begin  -- architecture arch
 
   -- Divided clock for SERDES parallel data
 
-  gen_mmcm_parallel_clk_bufg : if g_PARALLEL_CLK_BUF = "BUFG" generate
-    cmp_bufg : BUFG
-      port map(
-        I => pll_clkout0,
-        O => clk_div_buf);
-  end generate gen_mmcm_parallel_clk_bufg;
+  gen_buffer_for_cmt : if g_USE_SDR or (not g_USE_SDR and g_USE_PLL) generate
 
-  gen_mmcm_parallel_clk_bufio : if g_PARALLEL_CLK_BUF = "BUFR" generate
+    gen_mmcm_parallel_clk_bufg : if g_PARALLEL_CLK_BUF = "BUFG" generate
+      cmp_bufg : BUFG
+        port map(
+          I => pll_clkout0,
+          O => clk_div_buf);
+    end generate gen_mmcm_parallel_clk_bufg;
+
+    gen_mmcm_parallel_clk_bufio : if g_PARALLEL_CLK_BUF = "BUFR" generate
+      cmp_bufr : BUFR
+        generic map (
+          BUFR_DIVIDE => "1")
+        port map (
+          I => pll_clkout0,
+          CE  => '1',
+          CLR => '0',
+          O => clk_div_buf);
+    end generate gen_mmcm_parallel_clk_bufio;
+
+    gen_mmcm_parallel_clk_bufh : if g_PARALLEL_CLK_BUF = "BUFH" generate
+      cmp_bufh : BUFH
+        port map(
+          I => pll_clkout0,
+          O => clk_div_buf);
+    end generate gen_mmcm_parallel_clk_bufh;
+
+  end generate gen_buffer_for_cmt;
+
+  gen_buffer_for_direct : if not g_USE_SDR and not g_USE_PLL generate
+
+    -- We divide by 4 as the clock is DDR and we are not using a CMT,
+    -- but the input clock directly. The only option here is BUFR
     cmp_bufr : BUFR
       generic map (
-        BUFR_DIVIDE => "1")
+        BUFR_DIVIDE => "4")
       port map (
         I => pll_clkout0,
         CE  => '1',
         CLR => '0',
         O => clk_div_buf);
-  end generate gen_mmcm_parallel_clk_bufio;
 
-  gen_mmcm_parallel_clk_bufh : if g_PARALLEL_CLK_BUF = "BUFH" generate
-    cmp_bufh : BUFH
-      port map(
-        I => pll_clkout0,
-        O => clk_div_buf);
-  end generate gen_mmcm_parallel_clk_bufh;
+  end generate gen_buffer_for_direct;
 
   -- SERDES clock
   clk_serdes_p <= clk_serdes_buf;
