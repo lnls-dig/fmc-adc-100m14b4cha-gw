@@ -98,9 +98,27 @@ set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max -add_delay 0.33750 [ge
 set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc1_adc_fr_p_i}] -fall
 
 #######################################################################
-##                          DELAYS grouping                          ##
+##                          DELAY values                             ##
 #######################################################################
 
+## Overrides default_delay hdl parameter for the VARIABLE mode.
+## For Artix7: Average Tap Delay at 200 MHz = 78 ps, at 300 MHz = 52 ps ???
+
+# FMC 0 Clock
+set_property IDELAY_VALUE 30 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_clk_iodelay}]
+
+# FMC 0 Data
+set_property IDELAY_VALUE 0 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/*cmp_data_*_iodelay}]
+# FMC 0 Frame
+set_property IDELAY_VALUE 0 [get_cells -hier -filter {NAME =~ *adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_fr_iodelay}]
+
+# FMC 1 Clock
+set_property IDELAY_VALUE 28 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_clk_iodelay}]
+
+# FMC 1 Data
+set_property IDELAY_VALUE 0 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/*cmp_data_*_iodelay}]
+# FMC 1 Frame
+set_property IDELAY_VALUE 0 [get_cells -hier -filter {NAME =~ *adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_fr_iodelay}]
 
 #######################################################################
 ##                              CDC                                  ##
