@@ -38,6 +38,73 @@ create_generated_clock -name fmc1_fs_clk          [all_fanin -flat -startpoints_
 set fmc1_fs_clk_period                            [get_property PERIOD [get_clocks fmc1_fs_clk]]
 
 #######################################################################
+##                          DELAYS                                   ##
+#######################################################################
+
+# From LTC2175-12/LTC2174-12/LTC2173-12 data sheet (page 06)
+#
+#Output Clock to Data Propagation Delay:
+# tdata Rising/Falling Edge 0.35 * tSER (min) / 0.5 * tSER (typ) / 0.65 * tSER (max)
+#                       1/800*1e3*0.35 = 0.43750 ns / 0.62500 ns (typ) / 0.81250 ns (max)
+#
+#This is setup for a 400MHz clock (2.5ns period).  The LTC2174 specifies
+# tDATA as 0.35 *tSER to 0.65 * tSER.  The constraint adds an additional 100ps
+# to each side to account for potential skew due to the pcb. So, the tDC ends up
+# being 0.33750 ns to 0.91250 ns.  The value after IN in the constraint equal tDC min
+# (0.33750 ns). The  value after VALID = Period/2 + tDC min – tDC max (2.5ns/2 + 0.33750ns -
+# 0.91250 ns = 0.67500ns).  (The period is divided by two because the data is DDR.)
+#
+#
+#         OFFSET
+#        +---+
+#
+#             --------      --------
+# CLK         |      |      |      |      |
+#                    --------      --------
+#        --------------------------------
+# DATA   |      ||      ||      ||      |
+#        --------------------------------
+#
+#        +------+
+#         VALID
+#
+
+set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc0_adc_outa_p_i[*]}] -rise
+set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc0_adc_outa_p_i[*]}] -rise
+set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc0_adc_outa_p_i[*]}] -fall
+set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc0_adc_outa_p_i[*]}] -fall
+set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc0_adc_outb_p_i[*]}] -rise
+set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc0_adc_outb_p_i[*]}] -rise
+set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc0_adc_outb_p_i[*]}] -fall
+set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc0_adc_outb_p_i[*]}] -fall
+
+set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc0_adc_fr_p_i}] -rise
+set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc0_adc_fr_p_i}] -rise
+set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc0_adc_fr_p_i}] -fall
+set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc0_adc_fr_p_i}] -fall
+
+set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc1_adc_outa_p_i[*]}] -rise
+set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc1_adc_outa_p_i[*]}] -rise
+set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc1_adc_outa_p_i[*]}] -fall
+set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc1_adc_outa_p_i[*]}] -fall
+set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc1_adc_outb_p_i[*]}] -rise
+set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc1_adc_outb_p_i[*]}] -rise
+set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc1_adc_outb_p_i[*]}] -fall
+set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc1_adc_outb_p_i[*]}] -fall
+
+set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc1_adc_fr_p_i}] -rise
+set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc1_adc_fr_p_i}] -rise
+set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc1_adc_fr_p_i}] -fall
+set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc1_adc_fr_p_i}] -fall
+
+#######################################################################
+##                          DELAYS grouping                          ##
+#######################################################################
+
+# Constraint all IDELAY blocks to the same IDELAY control as the DDR 3, so the tool will replicate it as needed
+set_property IODELAY_GROUP DDR_CORE_IODELAY_MIG0 [get_cells -hier -filter {NAME =~ *cmp_idelayctrl}]
+
+#######################################################################
 ##                              CDC                                  ##
 #######################################################################
 
