@@ -83,9 +83,13 @@ architecture arch of ltc2174_2l16b_receiver is
   signal pll_clkout0    : std_logic;
   signal pll_clkout1    : std_logic;
 
+  signal adc_dco_pre_dly   : std_logic;
   signal adc_dco           : std_logic;
+  signal adc_fr_pre_dly    : std_logic;
   signal adc_fr            : std_logic;
+  signal adc_outa_pre_dly  : std_logic_vector(3 downto 0);
   signal adc_outa          : std_logic_vector(3 downto 0);
+  signal adc_outb_pre_dly  : std_logic_vector(3 downto 0);
   signal adc_outb          : std_logic_vector(3 downto 0);
   signal clk_serdes_p      : std_logic;
   signal clk_serdes_n      : std_logic;
@@ -133,7 +137,7 @@ begin  -- architecture arch
     port map (
       I  => adc_dco_p_i,
       IB => adc_dco_n_i,
-      O  => adc_dco);
+      O  => adc_dco_pre_dly);
 
   -- ADC frame start
   cmp_adc_fr_buf : IBUFDS
@@ -144,7 +148,7 @@ begin  -- architecture arch
     port map (
       I  => adc_fr_p_i,
       IB => adc_fr_n_i,
-      O  => adc_fr);
+      O  => adc_fr_pre_dly);
 
   gen_adc_data_buf : for I in 0 to 3 generate
 
@@ -156,7 +160,7 @@ begin  -- architecture arch
       port map (
         I  => adc_outa_p_i(i),
         IB => adc_outa_n_i(i),
-        O  => adc_outa(i));
+        O  => adc_outa_pre_dly(i));
 
     cmp_adc_outb_buf : IBUFDS
       generic map (
@@ -166,9 +170,121 @@ begin  -- architecture arch
       port map (
         I  => adc_outb_p_i(i),
         IB => adc_outb_n_i(i),
-        O  => adc_outb(i));
+        O  => adc_outb_pre_dly(i));
 
   end generate gen_adc_data_buf;
+
+  ------------------------------------------------------------------------------
+  -- IODELAY for data/clock
+  ------------------------------------------------------------------------------
+
+  cmp_clk_iodelay : idelaye2
+  generic map (
+    CINVCTRL_SEL                        => "FALSE",
+    DELAY_SRC                           => "IDATAIN",
+    HIGH_PERFORMANCE_MODE               => "TRUE",
+    IDELAY_TYPE                         => "VAR_LOAD",
+    IDELAY_VALUE                        => 0,
+    PIPE_SEL                            => "FALSE",
+    REFCLK_FREQUENCY                    => 200.0,
+    SIGNAL_PATTERN                      => "CLOCK"
+  )
+  port map (
+    cntvalueout                         => open,
+    dataout                             => adc_dco,
+    c                                   => clk_div_buf,
+    ce                                  => '0',
+    cinvctrl                            => '0',
+    cntvaluein                          => "00000",
+    datain                              => '0',
+    idatain                             => adc_dco_pre_dly,
+    inc                                 => '0',
+    ld                                  => '0',
+    ldpipeen                            => '0',
+    regrst                              => serdes_arst_i
+  );
+
+  cmp_fr_iodelay : idelaye2
+  generic map (
+    CINVCTRL_SEL                        => "FALSE",
+    DELAY_SRC                           => "IDATAIN",
+    HIGH_PERFORMANCE_MODE               => "TRUE",
+    IDELAY_TYPE                         => "VAR_LOAD",
+    IDELAY_VALUE                        => 0,
+    PIPE_SEL                            => "FALSE",
+    REFCLK_FREQUENCY                    => 200.0,
+    SIGNAL_PATTERN                      => "CLOCK"
+  )
+  port map (
+    cntvalueout                         => open,
+    dataout                             => adc_fr,
+    c                                   => clk_div_buf,
+    ce                                  => '0',
+    cinvctrl                            => '0',
+    cntvaluein                          => "00000",
+    datain                              => '0',
+    idatain                             => adc_fr_pre_dly,
+    inc                                 => '0',
+    ld                                  => '0',
+    ldpipeen                            => '0',
+    regrst                              => serdes_arst_i
+  );
+
+  gen_adc_data_iodelay : for I in 0 to 3 generate
+
+    cmp_data_outa_iodelay : idelaye2
+    generic map (
+      CINVCTRL_SEL                        => "FALSE",
+      DELAY_SRC                           => "IDATAIN",
+      HIGH_PERFORMANCE_MODE               => "TRUE",
+      IDELAY_TYPE                         => "VAR_LOAD",
+      IDELAY_VALUE                        => 0,
+      PIPE_SEL                            => "FALSE",
+      REFCLK_FREQUENCY                    => 200.0,
+      SIGNAL_PATTERN                      => "DATA"
+    )
+    port map (
+      cntvalueout                         => open,
+      dataout                             => adc_outa(I),
+      c                                   => clk_div_buf,
+      ce                                  => '0',
+      cinvctrl                            => '0',
+      cntvaluein                          => "00000",
+      datain                              => '0',
+      idatain                             => adc_outa_pre_dly(I),
+      inc                                 => '0',
+      ld                                  => '0',
+      ldpipeen                            => '0',
+      regrst                              => serdes_arst_i
+    );
+
+    cmp_data_outb_iodelay : idelaye2
+    generic map (
+      CINVCTRL_SEL                        => "FALSE",
+      DELAY_SRC                           => "IDATAIN",
+      HIGH_PERFORMANCE_MODE               => "TRUE",
+      IDELAY_TYPE                         => "VAR_LOAD",
+      IDELAY_VALUE                        => 0,
+      PIPE_SEL                            => "FALSE",
+      REFCLK_FREQUENCY                    => 200.0,
+      SIGNAL_PATTERN                      => "DATA"
+    )
+    port map (
+      cntvalueout                         => open,
+      dataout                             => adc_outb(I),
+      c                                   => clk_div_buf,
+      ce                                  => '0',
+      cinvctrl                            => '0',
+      cntvaluein                          => "00000",
+      datain                              => '0',
+      idatain                             => adc_outb_pre_dly(I),
+      inc                                 => '0',
+      ld                                  => '0',
+      ldpipeen                            => '0',
+      regrst                              => serdes_arst_i
+    );
+
+  end generate gen_adc_data_iodelay;
 
   -- We don't need BUFIO or any type of buffer to connect to MMCM/PLL, as in
   -- Spartan6
@@ -514,11 +630,11 @@ begin  -- architecture arch
         DATA_RATE      => f_data_rate_sel(g_USE_SDR),
         DATA_WIDTH     => 8,
         INTERFACE_TYPE => "NETWORKING",
-        IOBDELAY       => "IBUF",
+        IOBDELAY       => "IFD",
         SERDES_MODE    => "MASTER")
       port map (
-        D            => serdes_serial_in(I),
-        DDLY         => '0',
+        D            => '0',
+        DDLY         => serdes_serial_in(I),
         CE1          => '1',
         CE2          => '1',
         CLK          => clk_serdes_p,
