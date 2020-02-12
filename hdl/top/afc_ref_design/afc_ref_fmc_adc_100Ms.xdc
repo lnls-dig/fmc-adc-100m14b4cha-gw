@@ -47,55 +47,66 @@ set fmc1_fs_clk_period                            [get_property PERIOD [get_cloc
 # tdata Rising/Falling Edge 0.35 * tSER (min) / 0.5 * tSER (typ) / 0.65 * tSER (max)
 #                       1/800*1e3*0.35 = 0.43750 ns / 0.62500 ns (typ) / 0.81250 ns (max)
 #
-#This is setup for a 400MHz clock (2.5ns period).  The LTC2174 specifies
-# tDATA as 0.35 *tSER to 0.65 * tSER.  The constraint adds an additional 100ps
-# to each side to account for potential skew due to the pcb. So, the tDC ends up
-# being 0.33750 ns to 0.91250 ns.  The value after IN in the constraint equal tDC min
-# (0.33750 ns). The  value after VALID = Period/2 + tDC min – tDC max (2.5ns/2 + 0.33750ns -
-# 0.91250 ns = 0.67500ns).  (The period is divided by two because the data is DDR.)
+# Center-Aligned Double Data Rate Source Synchronous Inputs
+#
+# For a center-aligned Source Synchronous interface, the clock
+# transition is aligned with the center of the data valid window.
+# The same clock edge is used for launching and capturing the
+# data. The constraints below rely on the default timing
+# analysis (setup = 1/2 cycle, hold = 0 cycle).
+#
+# input                  ____________________
+# clock    _____________|                    |_____________
+#                       |                    |
+#                dv_bre | dv_are      dv_bfe | dv_afe
+#               <------>|<------>    <------>|<------>
+#          _    ________|________    ________|________    _
+# data     _XXXX____Rise_Data____XXXX____Fall_Data____XXXX_
 #
 #
-#         OFFSET
-#        +---+
+# set input_clock         <clock_name>;      # Name of input clock
+# set input_clock_period  <period_value>;    # Period of input clock (full-period)
+# set dv_bre              0.000;             # Data valid before the rising clock edge
+# set dv_are              0.000;             # Data valid after the rising clock edge
+# set dv_bfe              0.000;             # Data valid before the falling clock edge
+# set dv_afe              0.000;             # Data valid after the falling clock edge
+# set input_ports         <input_ports>;     # List of input ports
 #
-#             --------      --------
-# CLK         |      |      |      |      |
-#                    --------      --------
-#        --------------------------------
-# DATA   |      ||      ||      ||      |
-#        --------------------------------
+# # Input Delay Constraint
+# set_input_delay -clock $input_clock -max [expr $input_clock_period/2 - $dv_bfe] [get_ports $input_ports];
+# set_input_delay -clock $input_clock -min $dv_are                                [get_ports $input_ports];
+# set_input_delay -clock $input_clock -max [expr $input_clock_period/2 - $dv_bre] [get_ports $input_ports] -clock_fall -add_delay;
+# set_input_delay -clock $input_clock -min $dv_afe                                [get_ports $input_ports] -clock_fall -add_delay;
 #
-#        +------+
-#         VALID
+# Add 10% data off-center relative to the eye, both to rising and falling edges
+
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.68750 [get_ports {fmc0_adc_outa_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.56250 [get_ports {fmc0_adc_outa_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.68750 [get_ports {fmc0_adc_outa_p_i[*]}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.56250 [get_ports {fmc0_adc_outa_p_i[*]}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.68750 [get_ports {fmc0_adc_outb_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.56250 [get_ports {fmc0_adc_outb_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.68750 [get_ports {fmc0_adc_outb_p_i[*]}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.56250 [get_ports {fmc0_adc_outb_p_i[*]}] -clock_fall -add_delay
 #
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.68750 [get_ports {fmc0_adc_fr_p_i}]
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.56250 [get_ports {fmc0_adc_fr_p_i}]
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.68750 [get_ports {fmc0_adc_fr_p_i}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.56250 [get_ports {fmc0_adc_fr_p_i}] -clock_fall -add_delay
 #
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc0_adc_outa_p_i[*]}] -rise
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc0_adc_outa_p_i[*]}] -rise
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc0_adc_outa_p_i[*]}] -fall
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc0_adc_outa_p_i[*]}] -fall
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc0_adc_outb_p_i[*]}] -rise
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc0_adc_outb_p_i[*]}] -rise
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc0_adc_outb_p_i[*]}] -fall
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc0_adc_outb_p_i[*]}] -fall
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.68750 [get_ports {fmc1_adc_outa_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.56250 [get_ports {fmc1_adc_outa_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.68750 [get_ports {fmc1_adc_outa_p_i[*]}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.56250 [get_ports {fmc1_adc_outa_p_i[*]}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.68750 [get_ports {fmc1_adc_outb_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.56250 [get_ports {fmc1_adc_outb_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.68750 [get_ports {fmc1_adc_outb_p_i[*]}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.56250 [get_ports {fmc1_adc_outb_p_i[*]}] -clock_fall -add_delay
 #
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc0_adc_fr_p_i}] -rise
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc0_adc_fr_p_i}] -rise
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc0_adc_fr_p_i}] -fall
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc0_adc_fr_p_i}] -fall
-#
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc1_adc_outa_p_i[*]}] -rise
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc1_adc_outa_p_i[*]}] -rise
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc1_adc_outa_p_i[*]}] -fall
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc1_adc_outa_p_i[*]}] -fall
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc1_adc_outb_p_i[*]}] -rise
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc1_adc_outb_p_i[*]}] -rise
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc1_adc_outb_p_i[*]}] -fall
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc1_adc_outb_p_i[*]}] -fall
-#
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc1_adc_fr_p_i}] -rise
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc1_adc_fr_p_i}] -rise
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max -add_delay 0.33750 [get_ports {fmc1_adc_fr_p_i}] -fall
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min -add_delay 0.67500 [get_ports {fmc1_adc_fr_p_i}] -fall
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.68750 [get_ports {fmc1_adc_fr_p_i}]
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.56250 [get_ports {fmc1_adc_fr_p_i}]
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.68750 [get_ports {fmc1_adc_fr_p_i}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.56250 [get_ports {fmc1_adc_fr_p_i}] -clock_fall -add_delay
 
 #######################################################################
 ##                          DELAY values                             ##
@@ -108,17 +119,17 @@ set fmc1_fs_clk_period                            [get_property PERIOD [get_cloc
 set_property IDELAY_VALUE 0 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_clk_iodelay}]
 
 # FMC 0 Data
-set_property IDELAY_VALUE 19 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/*cmp_data_*_iodelay}]
+set_property IDELAY_VALUE 12 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/*cmp_data_*_iodelay}]
 # FMC 0 Frame
-set_property IDELAY_VALUE 19 [get_cells -hier -filter {NAME =~ *adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_fr_iodelay}]
+set_property IDELAY_VALUE 12 [get_cells -hier -filter {NAME =~ *adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_fr_iodelay}]
 
 # FMC 1 Clock
 set_property IDELAY_VALUE 0 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_clk_iodelay}]
 
 # FMC 1 Data
-set_property IDELAY_VALUE 18 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/*cmp_data_*_iodelay}]
+set_property IDELAY_VALUE 12 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/*cmp_data_*_iodelay}]
 # FMC 1 Frame
-set_property IDELAY_VALUE 18 [get_cells -hier -filter {NAME =~ *adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_fr_iodelay}]
+set_property IDELAY_VALUE 12 [get_cells -hier -filter {NAME =~ *adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_fr_iodelay}]
 
 #######################################################################
 ##                              CDC                                  ##
