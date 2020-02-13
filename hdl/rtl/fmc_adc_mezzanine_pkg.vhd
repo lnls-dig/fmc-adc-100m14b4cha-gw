@@ -166,10 +166,11 @@ package fmc_adc_mezzanine_pkg is
       fs_clk_o   : out std_logic;
       fs_rst_n_o : out std_logic;
 
-      adc_data_ch3_o : out std_logic_vector(15 downto 0);
-      adc_data_ch2_o : out std_logic_vector(15 downto 0);
-      adc_data_ch1_o : out std_logic_vector(15 downto 0);
-      adc_data_ch0_o : out std_logic_vector(15 downto 0);
+      adc_data_ch3_o   : out std_logic_vector(15 downto 0);
+      adc_data_ch2_o   : out std_logic_vector(15 downto 0);
+      adc_data_ch1_o   : out std_logic_vector(15 downto 0);
+      adc_data_ch0_o   : out std_logic_vector(15 downto 0);
+      adc_data_valid_o : out std_logic;
 
       adc_sw_trigger_o       : out std_logic;
       adc_ext_trigger_o      : out std_logic;
@@ -182,10 +183,11 @@ package fmc_adc_mezzanine_pkg is
       adc_pulse_trigger_o    : out std_logic;
 
       -- ADC data aligned with trigger, synch'ed with sys_clk
-      adc_data_ch3_sys_clk_o : out std_logic_vector(15 downto 0);
-      adc_data_ch2_sys_clk_o : out std_logic_vector(15 downto 0);
-      adc_data_ch1_sys_clk_o : out std_logic_vector(15 downto 0);
-      adc_data_ch0_sys_clk_o : out std_logic_vector(15 downto 0);
+      adc_data_ch3_sys_clk_o   : out std_logic_vector(15 downto 0);
+      adc_data_ch2_sys_clk_o   : out std_logic_vector(15 downto 0);
+      adc_data_ch1_sys_clk_o   : out std_logic_vector(15 downto 0);
+      adc_data_ch0_sys_clk_o   : out std_logic_vector(15 downto 0);
+      adc_data_valid_sys_clk_o : out std_logic;
 
       adc_sw_trigger_sys_clk_o       : out std_logic;
       adc_ext_trigger_sys_clk_o      : out std_logic;
