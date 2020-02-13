@@ -269,6 +269,7 @@ architecture top of afc_ref_fmc_adc_100Ms is
   signal fmc_adc_data_ch2                    : t_fmc_data_array(c_num_fmc_adc_100m_cores-1 downto 0);
   signal fmc_adc_data_ch1                    : t_fmc_data_array(c_num_fmc_adc_100m_cores-1 downto 0);
   signal fmc_adc_data_ch0                    : t_fmc_data_array(c_num_fmc_adc_100m_cores-1 downto 0);
+  signal fmc_adc_data_valid                  : t_fmc_logic_array(c_num_fmc_adc_100m_cores-1 downto 0);
 
   signal fmc_adc_sw_trigger                  : t_fmc_logic_array(c_num_fmc_adc_100m_cores-1 downto 0);
   signal fmc_adc_ext_trigger                 : t_fmc_logic_array(c_num_fmc_adc_100m_cores-1 downto 0);
@@ -664,6 +665,7 @@ begin
     adc_data_ch2_sys_clk_o                 => fmc_adc_data_ch2(c_fmc_adc_0_id),
     adc_data_ch1_sys_clk_o                 => fmc_adc_data_ch1(c_fmc_adc_0_id),
     adc_data_ch0_sys_clk_o                 => fmc_adc_data_ch0(c_fmc_adc_0_id),
+    adc_data_valid_sys_clk_o               => fmc_adc_data_valid(c_fmc_adc_0_id),
 
     adc_sw_trigger_sys_clk_o               => fmc_adc_sw_trigger(c_fmc_adc_0_id),
     adc_ext_trigger_sys_clk_o              => fmc_adc_ext_trigger(c_fmc_adc_0_id),
@@ -770,6 +772,7 @@ begin
     adc_data_ch2_sys_clk_o                 => fmc_adc_data_ch2(c_fmc_adc_1_id),
     adc_data_ch1_sys_clk_o                 => fmc_adc_data_ch1(c_fmc_adc_1_id),
     adc_data_ch0_sys_clk_o                 => fmc_adc_data_ch0(c_fmc_adc_1_id),
+    adc_data_valid_sys_clk_o               => fmc_adc_data_valid(c_fmc_adc_1_id),
 
     adc_sw_trigger_sys_clk_o               => fmc_adc_sw_trigger(c_fmc_adc_1_id),
     adc_ext_trigger_sys_clk_o              => fmc_adc_ext_trigger(c_fmc_adc_1_id),
@@ -850,7 +853,7 @@ begin
                                                                  fmc_adc_data_ch2(c_fmc_adc_0_id) &
                                                                  fmc_adc_data_ch1(c_fmc_adc_0_id) &
                                                                  fmc_adc_data_ch0(c_fmc_adc_0_id);
-  acq_chan_array(c_acq_core_0_id, c_acq_adc_id).dvalid        <= '1';
+  acq_chan_array(c_acq_core_0_id, c_acq_adc_id).dvalid        <= fmc_adc_data_valid(c_fmc_adc_0_id);
   acq_chan_array(c_acq_core_0_id, c_acq_adc_id).trig          <= trig_pulse_rcv(c_trig_mux_0_id, c_acq_adc_id).pulse;
 
   --------------------
@@ -862,7 +865,7 @@ begin
                                                                  fmc_adc_data_ch2(c_fmc_adc_1_id) &
                                                                  fmc_adc_data_ch1(c_fmc_adc_1_id) &
                                                                  fmc_adc_data_ch0(c_fmc_adc_1_id);
-  acq_chan_array(c_acq_core_1_id, c_acq_adc_id).dvalid        <= '1';
+  acq_chan_array(c_acq_core_1_id, c_acq_adc_id).dvalid        <= fmc_adc_data_valid(c_fmc_adc_1_id);
   acq_chan_array(c_acq_core_1_id, c_acq_adc_id).trig          <= trig_pulse_rcv(c_trig_mux_1_id, c_acq_adc_id).pulse;
 
   ----------------------------------------------------------------------
