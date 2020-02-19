@@ -78,35 +78,35 @@ set fmc1_fs_clk_period                            [get_property PERIOD [get_cloc
 # set_input_delay -clock $input_clock -max [expr $input_clock_period/2 - $dv_bre] [get_ports $input_ports] -clock_fall -add_delay;
 # set_input_delay -clock $input_clock -min $dv_afe                                [get_ports $input_ports] -clock_fall -add_delay;
 #
-# Add 10% data off-center relative to the eye, both to rising and falling edges
-
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.68750 [get_ports {fmc0_adc_outa_p_i[*]}]
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.56250 [get_ports {fmc0_adc_outa_p_i[*]}]
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.68750 [get_ports {fmc0_adc_outa_p_i[*]}] -clock_fall -add_delay
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.56250 [get_ports {fmc0_adc_outa_p_i[*]}] -clock_fall -add_delay
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.68750 [get_ports {fmc0_adc_outb_p_i[*]}]
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.56250 [get_ports {fmc0_adc_outb_p_i[*]}]
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.68750 [get_ports {fmc0_adc_outb_p_i[*]}] -clock_fall -add_delay
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.56250 [get_ports {fmc0_adc_outb_p_i[*]}] -clock_fall -add_delay
+# Add 0.100 ns data off-center relative to the eye, both to rising and falling edges
 #
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.68750 [get_ports {fmc0_adc_fr_p_i}]
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.56250 [get_ports {fmc0_adc_fr_p_i}]
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.68750 [get_ports {fmc0_adc_fr_p_i}] -clock_fall -add_delay
-#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.56250 [get_ports {fmc0_adc_fr_p_i}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.91250 [get_ports {fmc0_adc_outa_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.33750 [get_ports {fmc0_adc_outa_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.91250 [get_ports {fmc0_adc_outa_p_i[*]}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.33750 [get_ports {fmc0_adc_outa_p_i[*]}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.91250 [get_ports {fmc0_adc_outb_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.33750 [get_ports {fmc0_adc_outb_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.91250 [get_ports {fmc0_adc_outb_p_i[*]}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.33750 [get_ports {fmc0_adc_outb_p_i[*]}] -clock_fall -add_delay
 #
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.68750 [get_ports {fmc1_adc_outa_p_i[*]}]
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.56250 [get_ports {fmc1_adc_outa_p_i[*]}]
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.68750 [get_ports {fmc1_adc_outa_p_i[*]}] -clock_fall -add_delay
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.56250 [get_ports {fmc1_adc_outa_p_i[*]}] -clock_fall -add_delay
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.68750 [get_ports {fmc1_adc_outb_p_i[*]}]
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.56250 [get_ports {fmc1_adc_outb_p_i[*]}]
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.68750 [get_ports {fmc1_adc_outb_p_i[*]}] -clock_fall -add_delay
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.56250 [get_ports {fmc1_adc_outb_p_i[*]}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.91250 [get_ports {fmc0_adc_fr_p_i}]
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.33750 [get_ports {fmc0_adc_fr_p_i}]
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -max 0.91250 [get_ports {fmc0_adc_fr_p_i}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc0_adc_dco_p_i] -min 0.33750 [get_ports {fmc0_adc_fr_p_i}] -clock_fall -add_delay
 #
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.68750 [get_ports {fmc1_adc_fr_p_i}]
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.56250 [get_ports {fmc1_adc_fr_p_i}]
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.68750 [get_ports {fmc1_adc_fr_p_i}] -clock_fall -add_delay
-#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.56250 [get_ports {fmc1_adc_fr_p_i}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.91250 [get_ports {fmc1_adc_outa_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.33750 [get_ports {fmc1_adc_outa_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.91250 [get_ports {fmc1_adc_outa_p_i[*]}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.33750 [get_ports {fmc1_adc_outa_p_i[*]}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.91250 [get_ports {fmc1_adc_outb_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.33750 [get_ports {fmc1_adc_outb_p_i[*]}]
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.91250 [get_ports {fmc1_adc_outb_p_i[*]}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.33750 [get_ports {fmc1_adc_outb_p_i[*]}] -clock_fall -add_delay
+#
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.91250 [get_ports {fmc1_adc_fr_p_i}]
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.33750 [get_ports {fmc1_adc_fr_p_i}]
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -max 0.91250 [get_ports {fmc1_adc_fr_p_i}] -clock_fall -add_delay
+#set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.33750 [get_ports {fmc1_adc_fr_p_i}] -clock_fall -add_delay
 
 #######################################################################
 ##                          DELAY values                             ##
