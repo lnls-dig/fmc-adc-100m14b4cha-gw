@@ -42,6 +42,10 @@ use work.fmc_adc_100ms_csr_pkg.all;
 entity fmc_adc_100Ms_core is
   generic (
     g_MULTISHOT_RAM_SIZE : natural                        := 2048;
+    -- Only used on Xilinx 7-series
+    g_7SERIES_SERIAL_CLK_BUF   : string                   := "BUFIO";
+    -- Buffer type for serial clock. Options are : BUFG, BUFH and BUFR
+    g_7SERIES_PARALLEL_CLK_BUF : string                   := "BUFR";
     -- Only used on Xilinx Spartan6 FPGAs
     g_SPARTAN6_USE_PLL   : boolean                        := TRUE;
     -- External trigger delay calibration value
@@ -483,7 +487,9 @@ begin
 
   cmp_adc_serdes : entity work.ltc2174_2l16b_receiver
     generic map (
-      g_USE_PLL => g_SPARTAN6_USE_PLL)
+      g_USE_PLL => g_SPARTAN6_USE_PLL,
+      g_SERIAL_CLK_BUF   => g_7SERIES_SERIAL_CLK_BUF,
+      g_PARALLEL_CLK_BUF => g_7SERIES_PARALLEL_CLK_BUF)
     port map (
       adc_dco_p_i     => adc_dco_p_i,
       adc_dco_n_i     => adc_dco_n_i,

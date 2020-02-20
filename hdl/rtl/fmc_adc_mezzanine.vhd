@@ -41,6 +41,10 @@ use work.timetag_core_defs_pkg.all;
 entity fmc_adc_mezzanine is
   generic (
     g_MULTISHOT_RAM_SIZE : natural := 2048;
+    -- Only used on Xilinx 7-series
+    g_7SERIES_SERIAL_CLK_BUF   : string                   := "BUFIO";
+    -- Buffer type for serial clock. Options are : BUFG, BUFH and BUFR
+    g_7SERIES_PARALLEL_CLK_BUF : string                   := "BUFR";
     -- Only used on Xilinx Spartan6 FPGAs
     g_SPARTAN6_USE_PLL   : boolean                        := TRUE;
     -- External trigger delay calibration value
@@ -381,6 +385,8 @@ begin
     generic map (
       g_MULTISHOT_RAM_SIZE => g_MULTISHOT_RAM_SIZE,
       g_SPARTAN6_USE_PLL   => g_SPARTAN6_USE_PLL,
+      g_7SERIES_SERIAL_CLK_BUF   => g_7SERIES_SERIAL_CLK_BUF,
+      g_7SERIES_PARALLEL_CLK_BUF => g_7SERIES_PARALLEL_CLK_BUF,
       g_TRIG_DELAY_EXT     => g_TRIG_DELAY_EXT,
       g_TRIG_DELAY_SW      => g_TRIG_DELAY_SW,
       g_WB_CSR_MODE        => PIPELINED,
