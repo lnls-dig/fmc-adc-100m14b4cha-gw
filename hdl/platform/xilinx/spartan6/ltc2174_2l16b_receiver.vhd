@@ -43,7 +43,10 @@ entity ltc2174_2l16b_receiver is
     -- with limited number of available PLLs, but it can be unroutable in some
     -- corner cases. This is why the dual BUFIO2 solution is not the default
     -- option.
-    g_USE_PLL : boolean := TRUE);
+    g_USE_PLL : boolean := TRUE;
+    -- Only for 7 series. Added here for compatibility
+    g_SERIAL_CLK_BUF       : string := "BUFIO";
+    g_PARALLEL_CLK_BUF     : string := "BUFR");
   port (
     -- ADC data clock
     adc_dco_p_i     : in  std_logic;
