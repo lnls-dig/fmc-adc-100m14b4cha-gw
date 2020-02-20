@@ -119,29 +119,29 @@ set_input_delay -clock [get_clocks fmc1_adc_dco_p_i] -min 0.71250 [get_ports {fm
 set_property IDELAY_VALUE 0 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_clk_iodelay}]
 
 # FMC 0 Data
-set_property IDELAY_VALUE 9 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[0].cmp_data_outa_iodelay}]
-set_property IDELAY_VALUE 9 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[1].cmp_data_outa_iodelay}]
-set_property IDELAY_VALUE 9 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[2].cmp_data_outa_iodelay}]
-set_property IDELAY_VALUE 9 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[3].cmp_data_outa_iodelay}]
-set_property IDELAY_VALUE 9 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[0].cmp_data_outb_iodelay}]
-set_property IDELAY_VALUE 9 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[1].cmp_data_outb_iodelay}]
-set_property IDELAY_VALUE 9 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[2].cmp_data_outb_iodelay}]
-set_property IDELAY_VALUE 9 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[3].cmp_data_outb_iodelay}]
+set_property IDELAY_VALUE 9  [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[0].cmp_data_outa_iodelay}]
+set_property IDELAY_VALUE 9  [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[1].cmp_data_outa_iodelay}]
+set_property IDELAY_VALUE 9  [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[2].cmp_data_outa_iodelay}]
+set_property IDELAY_VALUE 9  [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[3].cmp_data_outa_iodelay}]
+set_property IDELAY_VALUE 9  [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[0].cmp_data_outb_iodelay}]
+set_property IDELAY_VALUE 9  [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[1].cmp_data_outb_iodelay}]
+set_property IDELAY_VALUE 9  [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[2].cmp_data_outb_iodelay}]
+set_property IDELAY_VALUE 9  [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[3].cmp_data_outb_iodelay}]
 # FMC 0 Frame
 set_property IDELAY_VALUE 10 [get_cells -hier -filter {NAME =~ *adc_0_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_fr_iodelay}]
 
 # FMC 1 Clock
-set_property IDELAY_VALUE 0 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_clk_iodelay}]
+set_property IDELAY_VALUE 0  [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_clk_iodelay}]
 
 # FMC 1 Data
-set_property IDELAY_VALUE 9 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[0].cmp_data_outa_iodelay}]
-set_property IDELAY_VALUE 9 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[1].cmp_data_outa_iodelay}]
-set_property IDELAY_VALUE 9 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[2].cmp_data_outa_iodelay}]
+set_property IDELAY_VALUE 9  [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[0].cmp_data_outa_iodelay}]
+set_property IDELAY_VALUE 9  [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[1].cmp_data_outa_iodelay}]
+set_property IDELAY_VALUE 9  [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[2].cmp_data_outa_iodelay}]
 set_property IDELAY_VALUE 10 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[3].cmp_data_outa_iodelay}]
 set_property IDELAY_VALUE 10 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[0].cmp_data_outb_iodelay}]
-set_property IDELAY_VALUE 10 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[1].cmp_data_outb_iodelay}]
+set_property IDELAY_VALUE 9 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[1].cmp_data_outb_iodelay}]
 set_property IDELAY_VALUE 10 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[2].cmp_data_outb_iodelay}]
-set_property IDELAY_VALUE 9 [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[3].cmp_data_outb_iodelay}]
+set_property IDELAY_VALUE 9  [get_cells -hier -filter {NAME =~ *cmp_fmc_adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/gen_adc_data_iodelay[3].cmp_data_outb_iodelay}]
 # FMC 1 Frame
 set_property IDELAY_VALUE 10 [get_cells -hier -filter {NAME =~ *adc_1_mezzanine/cmp_fmc_adc_100Ms_core/cmp_adc_serdes/cmp_fr_iodelay}]
 
