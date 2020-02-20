@@ -243,6 +243,8 @@ architecture top of afc_ref_fmc_adc_100Ms is
   -- General constants
   -----------------------------------------------------------------------------
 
+  constant c_7SERIES_SERIAL_CLK_BUF          : string := "BUFIO";
+  constant c_7SERIES_PARALLEL_CLK_BUF        : string := "BUFR";
   constant c_NUM_USER_IRQ                    : natural := 1;
 
   -- Wishbone
@@ -626,6 +628,8 @@ begin
   generic map (
     -- We are not using the Acquisition engine from fmc_adc_mezzanine
     g_MULTISHOT_RAM_SIZE                   => 0,
+    g_7SERIES_SERIAL_CLK_BUF               => c_7SERIES_SERIAL_CLK_BUF,
+    g_7SERIES_PARALLEL_CLK_BUF             => c_7SERIES_PARALLEL_CLK_BUF,
     g_SPARTAN6_USE_PLL                     => FALSE,
     g_WITH_SDB_CROSSBAR                    => TRUE,
     g_WB_MODE                              => PIPELINED,
@@ -733,6 +737,8 @@ begin
   generic map (
     -- We are not using the Acquisition engine from fmc_adc_mezzanine
     g_MULTISHOT_RAM_SIZE                   => 0,
+    g_7SERIES_SERIAL_CLK_BUF               => c_7SERIES_SERIAL_CLK_BUF,
+    g_7SERIES_PARALLEL_CLK_BUF             => c_7SERIES_PARALLEL_CLK_BUF,
     g_SPARTAN6_USE_PLL                     => FALSE,
     g_WITH_SDB_CROSSBAR                    => TRUE,
     g_WB_MODE                              => PIPELINED,
