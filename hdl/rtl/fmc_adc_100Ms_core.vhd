@@ -157,31 +157,15 @@ end fmc_adc_100Ms_core;
 architecture rtl of fmc_adc_100Ms_core is
 
   ------------------------------------------------------------------------------
-  -- Components declaration
-  ------------------------------------------------------------------------------
-
-  component offset_gain_s
-    port (
-      rst_n_i  : in  std_logic;                      --! Reset (active low)
-      clk_i    : in  std_logic;                      --! Clock
-      offset_i : in  std_logic_vector(15 downto 0);  --! Signed offset input (two's complement)
-      gain_i   : in  std_logic_vector(15 downto 0);  --! Unsigned gain input
-      sat_i    : in  std_logic_vector(14 downto 0);  --! Unsigned saturation value input
-      data_i   : in  std_logic_vector(15 downto 0);  --! Signed data input (two's complement)
-      data_o   : out std_logic_vector(15 downto 0)   --! Signed data output (two's complement)
-      );
-  end component offset_gain_s;
-
-  ------------------------------------------------------------------------------
   -- Constants declaration
   ------------------------------------------------------------------------------
-  constant c_dpram_depth : integer := f_log2_size(g_multishot_ram_size);
+  constant c_DPRAM_DEPTH : integer := f_log2_size(g_MULTISHOT_RAM_SIZE);
 
   -- Calculate the maximum number of available samples per multishot trigger
   -- Note: we subtract 2 for the timetag, and 1 more because of bug when number
   -- of samples equals the size of the dpram
   constant c_MULTISHOT_SAMPLE_DEPTH : std_logic_vector(31 downto 0) :=
-    std_logic_vector(to_unsigned(g_multishot_ram_size - 3, 32));
+    std_logic_vector(to_unsigned(g_MULTISHOT_RAM_SIZE - 3, 32));
 
   ------------------------------------------------------------------------------
   -- Types declaration
@@ -218,6 +202,8 @@ architecture rtl of fmc_adc_100Ms_core is
   signal serdes_out_data_synced  : std_logic_vector(63 downto 0);
   signal serdes_man_bitslip      : std_logic;
   signal serdes_man_bitslip_sync : std_logic;
+  signal serdes_locked           : std_logic;
+  signal serdes_locked_sync      : std_logic;
   signal serdes_synced           : std_logic;
   signal serdes_synced_sync      : std_logic;
 
@@ -227,7 +213,7 @@ architecture rtl of fmc_adc_100Ms_core is
   signal ext_trig_delay             : std_logic_vector(31 downto 0);
   signal ext_trig_delay_cnt         : unsigned(31 downto 0);
   signal ext_trig_delay_bsy         : std_logic;
-  signal ext_trig_en                : std_logic;
+  signal ext_trig_en, ext_trig_sync : std_logic;
   signal ext_trig_fixed_delay       : std_logic_vector(g_TRIG_DELAY_EXT+2 downto 0);
   signal ext_trig_p, ext_trig_n     : std_logic;
   signal ext_trig_pol               : std_logic;
@@ -250,10 +236,11 @@ architecture rtl of fmc_adc_100Ms_core is
   signal sw_trig_fixed_delay        : std_logic_vector(g_TRIG_DELAY_SW+2 downto 0);
   signal sw_trig_in                 : std_logic := '0';
   signal sw_trig_sync_ack           : std_logic := '0';
-  signal time_trig                  : std_logic;
+  signal time_trig, time_trig_sync  : std_logic;
   signal time_trig_en               : std_logic;
   signal time_trig_fixed_delay      : std_logic_vector(g_TRIG_DELAY_SW+2 downto 0);
   signal aux_time_trig              : std_logic;
+  signal aux_time_trig_sync         : std_logic;
   signal aux_time_trig_fixed_delay  : std_logic_vector(g_TRIG_DELAY_SW+2 downto 0);
   signal trig                       : std_logic;
   signal trig_align                 : std_logic_vector(8 downto 0);
@@ -331,24 +318,24 @@ architecture rtl of fmc_adc_100Ms_core is
   signal multishot_buffer_sel : std_logic;
 
   -- Multi-shot mode
-  signal dpram_addra_cnt       : unsigned(c_dpram_depth-1 downto 0);
-  signal dpram_addra_trig      : unsigned(c_dpram_depth-1 downto 0);
-  signal dpram_addra_post_done : unsigned(c_dpram_depth-1 downto 0);
-  signal dpram_addrb_cnt       : unsigned(c_dpram_depth-1 downto 0);
+  signal dpram_addra_cnt       : unsigned(c_DPRAM_DEPTH-1 downto 0);
+  signal dpram_addra_trig      : unsigned(c_DPRAM_DEPTH-1 downto 0);
+  signal dpram_addra_post_done : unsigned(c_DPRAM_DEPTH-1 downto 0);
+  signal dpram_addrb_cnt       : unsigned(c_DPRAM_DEPTH-1 downto 0);
   signal dpram_dout            : std_logic_vector(63 downto 0);
   signal dpram_valid           : std_logic;
   signal dpram_valid_t         : std_logic;
 
   signal dpram0_dina  : std_logic_vector(63 downto 0);
-  signal dpram0_addra : std_logic_vector(c_dpram_depth-1 downto 0);
+  signal dpram0_addra : std_logic_vector(c_DPRAM_DEPTH-1 downto 0);
   signal dpram0_wea   : std_logic;
-  signal dpram0_addrb : std_logic_vector(c_dpram_depth-1 downto 0);
+  signal dpram0_addrb : std_logic_vector(c_DPRAM_DEPTH-1 downto 0);
   signal dpram0_doutb : std_logic_vector(63 downto 0);
 
   signal dpram1_dina  : std_logic_vector(63 downto 0);
-  signal dpram1_addra : std_logic_vector(c_dpram_depth-1 downto 0);
+  signal dpram1_addra : std_logic_vector(c_DPRAM_DEPTH-1 downto 0);
   signal dpram1_wea   : std_logic;
-  signal dpram1_addrb : std_logic_vector(c_dpram_depth-1 downto 0);
+  signal dpram1_addrb : std_logic_vector(c_DPRAM_DEPTH-1 downto 0);
   signal dpram1_doutb : std_logic_vector(63 downto 0);
 
   -- Wishbone to DDR flowcontrol FIFO
@@ -359,7 +346,6 @@ architecture rtl of fmc_adc_100Ms_core is
   signal wb_ddr_fifo_wr    : std_logic;
   signal wb_ddr_fifo_rd    : std_logic;
   signal wb_ddr_fifo_valid : std_logic;
-  signal wb_ddr_fifo_dreq  : std_logic;
   signal wb_ddr_fifo_wr_en : std_logic;
 
   -- RAM address counter
@@ -393,12 +379,12 @@ begin
 
   cmp_csr_wb_slave_adapter : wb_slave_adapter
     generic map (
-      g_master_use_struct  => TRUE,
-      g_master_mode        => PIPELINED,
-      g_master_granularity => BYTE,
-      g_slave_use_struct   => TRUE,
-      g_slave_mode         => g_WB_CSR_MODE,
-      g_slave_granularity  => g_WB_CSR_GRANULARITY)
+      g_MASTER_USE_STRUCT  => TRUE,
+      g_MASTER_MODE        => PIPELINED,
+      g_MASTER_GRANULARITY => BYTE,
+      g_SLAVE_USE_STRUCT   => TRUE,
+      g_SLAVE_MODE         => g_WB_CSR_MODE,
+      g_SLAVE_GRANULARITY  => g_WB_CSR_GRANULARITY)
     port map (
       clk_sys_i => sys_clk_i,
       rst_n_i   => sys_rst_n_i,
@@ -412,7 +398,7 @@ begin
   ------------------------------------------------------------------------------
   cmp_acq_led: gc_extend_pulse
     generic map (
-      g_width => 12500000)
+      g_WIDTH => 12500000)
     port map (
       clk_i      => sys_clk_i,
       rst_n_i    => sys_rst_n_i,
@@ -423,7 +409,7 @@ begin
 
   cmp_trig_led: gc_extend_pulse
     generic map (
-      g_width => 12500000)
+      g_WIDTH => 12500000)
     port map (
       clk_i      => sys_clk_i,
       rst_n_i    => sys_rst_n_i,
@@ -436,12 +422,12 @@ begin
   -- Resets
   ------------------------------------------------------------------------------
 
-  cmp_sys_rst_fs_resync : gc_sync_ffs
+  cmp_sys_rst_fs_resync : gc_sync
     port map (
-      clk_i    => fs_clk,
-      rst_n_i  => '1',
-      data_i   => sys_rst_n_i,
-      synced_o => fs_rst_n);
+      clk_i     => fs_clk,
+      rst_n_a_i => '1',
+      d_i       => sys_rst_n_i,
+      q_o       => fs_rst_n);
 
   serdes_arst <= not fs_rst_n;
   fs_rst_n_o  <= fs_rst_n;
@@ -478,12 +464,12 @@ begin
   ------------------------------------------------------------------------------
   -- ADC SerDes
   ------------------------------------------------------------------------------
-  cmp_man_bitslip_sync : gc_sync_ffs
+  cmp_man_bitslip_sync : gc_sync
     port map (
-      clk_i    => fs_clk,
-      rst_n_i  => '1',
-      data_i   => serdes_man_bitslip,
-      synced_o => serdes_man_bitslip_sync);
+      clk_i     => fs_clk,
+      rst_n_a_i => '1',
+      d_i       => serdes_man_bitslip,
+      q_o       => serdes_man_bitslip_sync);
 
   cmp_adc_serdes : entity work.ltc2174_2l16b_receiver
     generic map (
@@ -501,16 +487,24 @@ begin
       adc_outb_n_i    => adc_outb_n_i,
       serdes_arst_i   => serdes_arst,
       serdes_bslip_i  => serdes_man_bitslip_sync,
+      serdes_locked_o => serdes_locked,
       serdes_synced_o => serdes_synced,
       adc_data_o      => serdes_out_data,
       adc_clk_o       => fs_clk);
 
-  cmp_serdes_synced_sync : gc_sync_ffs
+  cmp_serdes_synced_sync : gc_sync
     port map (
-      clk_i    => sys_clk_i,
-      rst_n_i  => '1',
-      data_i   => serdes_synced,
-      synced_o => serdes_synced_sync);
+      clk_i     => sys_clk_i,
+      rst_n_a_i => '1',
+      d_i       => serdes_synced,
+      q_o       => serdes_synced_sync);
+
+  cmp_serdes_locked_sync : gc_sync
+    port map (
+      clk_i     => sys_clk_i,
+      rst_n_a_i => '1',
+      d_i       => serdes_locked,
+      q_o       => serdes_locked_sync);
 
   ------------------------------------------------------------------------------
   -- ADC core control and status registers (CSR)
@@ -525,7 +519,7 @@ begin
       fmc_adc_100Ms_csr_o => csr_regout);
 
   csr_regin.sta_fsm           <= acq_fsm_state;
-  csr_regin.sta_serdes_pll    <= '1';
+  csr_regin.sta_serdes_pll    <= serdes_locked_sync;
   csr_regin.sta_serdes_synced <= serdes_synced_sync;
   csr_regin.sta_acq_cfg       <= acq_config_ok;
   csr_regin.trig_stat_ext     <= trig_storage(0);
@@ -600,26 +594,26 @@ begin
     end if;
   end process p_delay_gpio_ssr;
 
-  cmp_ext_trig_en_sync : gc_sync_ffs
+  cmp_ext_trig_en_sync : gc_sync
     port map (
-      clk_i    => fs_clk,
-      rst_n_i  => '1',
-      data_i   => csr_regout.trig_en_ext,
-      synced_o => ext_trig_en);
+      clk_i     => fs_clk,
+      rst_n_a_i => '1',
+      d_i       => csr_regout.trig_en_ext,
+      q_o       => ext_trig_en);
 
-  cmp_ext_trig_pol_sync : gc_sync_ffs
+  cmp_ext_trig_pol_sync : gc_sync
     port map (
-      clk_i    => fs_clk,
-      rst_n_i  => '1',
-      data_i   => csr_regout.trig_pol_ext,
-      synced_o => ext_trig_pol);
+      clk_i     => fs_clk,
+      rst_n_a_i => '1',
+      d_i       => csr_regout.trig_pol_ext,
+      q_o       => ext_trig_pol);
 
-  cmp_time_trig_en_sync : gc_sync_ffs
+  cmp_time_trig_en_sync : gc_sync
     port map (
-      clk_i    => fs_clk,
-      rst_n_i  => '1',
-      data_i   => csr_regout.trig_en_time,
-      synced_o => time_trig_en);
+      clk_i     => fs_clk,
+      rst_n_a_i => '1',
+      d_i       => csr_regout.trig_en_time,
+      q_o       => time_trig_en);
 
   cmp_downsample_sync : gc_sync_word_wr
     generic map (
@@ -659,19 +653,19 @@ begin
 
   gen_ch_reg_sync : for I in 1 to 4 generate
 
-    cmp_int_trig_en_sync : gc_sync_ffs
+    cmp_int_trig_en_sync : gc_sync
       port map (
-        clk_i    => fs_clk,
-        rst_n_i  => '1',
-        data_i   => int_trig_en_in(I),
-        synced_o => int_trig_en(I));
+        clk_i     => fs_clk,
+        rst_n_a_i => '1',
+        d_i       => int_trig_en_in(I),
+        q_o       => int_trig_en(I));
 
-    cmp_int_trig_pol_sync : gc_sync_ffs
+    cmp_int_trig_pol_sync : gc_sync
       port map (
-        clk_i    => fs_clk,
-        rst_n_i  => '1',
-        data_i   => int_trig_pol_in(I),
-        synced_o => int_trig_pol(I));
+        clk_i     => fs_clk,
+        rst_n_a_i => '1',
+        d_i       => int_trig_pol_in(I),
+        q_o       => int_trig_pol(I));
 
     cmp_ch_trig_thres_sync : gc_sync_word_wr
       generic map (
@@ -761,7 +755,7 @@ begin
   -- Offset and gain calibration
   ------------------------------------------------------------------------------
   l_offset_gain_calibr : for I in 0 to 3 generate
-    cmp_offset_gain_calibr : offset_gain_s
+    cmp_offset_gain_calibr : entity work.offset_gain_s
       port map(
         rst_n_i  => fs_rst_n,
         clk_i    => fs_clk,
@@ -788,14 +782,26 @@ begin
       );
 
   -- External hardware trigger synchronization
-  cmp_ext_trig_sync : gc_sync_ffs
+  cmp_ext_trig_sync : gc_sync
     port map (
-      clk_i    => fs_clk,
-      rst_n_i  => '1',
-      data_i   => ext_trig_a,
-      synced_o => open,
-      npulse_o => ext_trig_n,
-      ppulse_o => ext_trig_p);
+      clk_i     => fs_clk,
+      rst_n_a_i => '1',
+      d_i       => ext_trig_a,
+      q_o       => ext_trig_sync);
+
+  cmp_ext_trig_negedge : gc_negedge
+    port map (
+      clk_i   => fs_clk,
+      rst_n_i => '1',
+      data_i  => ext_trig_sync,
+      pulse_o => ext_trig_n);
+
+  cmp_ext_trig_posedge : gc_posedge
+    port map (
+      clk_i   => fs_clk,
+      rst_n_i => '1',
+      data_i  => ext_trig_sync,
+      pulse_o => ext_trig_p);
 
   -- select external trigger pulse polarity
   with ext_trig_pol select
@@ -850,26 +856,36 @@ begin
   end process p_ext_trig_delay;
 
   -- Time trigger synchronization (from 125MHz timetag core)
-  cmp_time_trig_sync : gc_sync_ffs
+  cmp_time_trig_sync : gc_sync
     port map (
-      clk_i    => fs_clk,
-      rst_n_i  => '1',
-      data_i   => time_trig_i,
-      synced_o => open,
-      npulse_o => open,
-      ppulse_o => time_trig);
+      clk_i     => fs_clk,
+      rst_n_a_i => '1',
+      d_i       => time_trig_i,
+      q_o       => time_trig_sync);
 
-  cmp_aux_time_trig_sync : gc_sync_ffs
+  cmp_time_trig_posedge : gc_posedge
     port map (
-      clk_i    => fs_clk,
-      rst_n_i  => '1',
-      data_i   => aux_time_trig_i,
-      synced_o => open,
-      npulse_o => open,
-      ppulse_o => aux_time_trig);
+      clk_i   => fs_clk,
+      rst_n_i => '1',
+      data_i  => time_trig_sync,
+      pulse_o => time_trig);
+
+  cmp_aux_time_trig_sync : gc_sync
+    port map (
+      clk_i     => fs_clk,
+      rst_n_a_i => '1',
+      d_i       => aux_time_trig_i,
+      q_o       => aux_time_trig_sync);
+
+  cmp_aux_time_trig_posedge : gc_posedge
+    port map (
+      clk_i   => fs_clk,
+      rst_n_i => '1',
+      data_i  => aux_time_trig_sync,
+      pulse_o => aux_time_trig);
 
   -- Internal hardware trigger
-  g_int_trig : for I in 1 to 4 generate
+  gen_int_trig : for I in 1 to 4 generate
     int_trig_data(I) <= data_calibr_out(16*I-1 downto 16*I-16);
 
     cmp_gc_comparator: gc_comparator
@@ -929,7 +945,7 @@ begin
       end if;
     end process p_int_trig_delay;
 
-  end generate g_int_trig;
+  end generate gen_int_trig;
 
   -- Due to the comparator, configurable trigger delay and trigger align logic,
   -- internal threshold triggers are misaligned with respect to the incoming
@@ -1033,10 +1049,10 @@ begin
 
   cmp_adc_sync_fifo : generic_async_fifo_dual_rst
     generic map (
-      g_data_width             => 73,
-      g_size                   => 16,
-      g_show_ahead             => TRUE)
-    port map(
+      g_DATA_WIDTH => 73,
+      g_SIZE       => 16,
+      g_SHOW_AHEAD => TRUE)
+     port map(
       rst_wr_n_i        => fs_rst_n,
       clk_wr_i          => fs_clk,
       d_i               => sync_fifo_din,
@@ -1247,7 +1263,7 @@ begin
       elsif unsigned(shots_value) = to_unsigned(0, shots_value'length) then
         acq_config_ok <= '0';
       elsif single_shot = '0' and
-        unsigned(pre_trig_value) + unsigned(post_trig_value) + 3 >= to_unsigned(g_multishot_ram_size, pre_trig_value'length) then
+        unsigned(pre_trig_value) + unsigned(post_trig_value) + 3 >= to_unsigned(g_MULTISHOT_RAM_SIZE, pre_trig_value'length) then
         acq_config_ok <= '0';
       else
         acq_config_ok <= '1';
@@ -1469,11 +1485,11 @@ begin
   cmp_multishot_dpram0 : generic_dpram
     generic map
     (
-      g_data_width               => 64,
-      g_size                     => g_multishot_ram_size,
-      g_with_byte_enable         => FALSE,
-      g_addr_conflict_resolution => "read_first",
-      g_dual_clock               => FALSE
+      g_DATA_WIDTH               => 64,
+      g_SIZE                     => g_MULTISHOT_RAM_SIZE,
+      g_WITH_BYTE_ENABLE         => FALSE,
+      g_ADDR_CONFLICT_RESOLUTION => "read_first",
+      g_DUAL_CLOCK               => FALSE
       -- default values for the rest of the generics are okay
       )
     port map
@@ -1496,11 +1512,11 @@ begin
   cmp_multishot_dpram1 : generic_dpram
     generic map
     (
-      g_data_width               => 64,
-      g_size                     => g_multishot_ram_size,
-      g_with_byte_enable         => FALSE,
-      g_addr_conflict_resolution => "read_first",
-      g_dual_clock               => FALSE
+      g_DATA_WIDTH               => 64,
+      g_SIZE                     => g_MULTISHOT_RAM_SIZE,
+      g_WITH_BYTE_ENABLE         => FALSE,
+      g_ADDR_CONFLICT_RESOLUTION => "read_first",
+      g_DUAL_CLOCK               => FALSE
       -- default values for the rest of the generics are okay
       )
     port map
@@ -1530,7 +1546,7 @@ begin
         dpram_valid     <= '0';
       else
         if trig_tag_done = '1' then
-          dpram_addrb_cnt <= dpram_addra_trig - unsigned(pre_trig_value(c_dpram_depth-1 downto 0));
+          dpram_addrb_cnt <= dpram_addra_trig - unsigned(pre_trig_value(c_DPRAM_DEPTH-1 downto 0));
           dpram_valid_t   <= '1';
         elsif (dpram_addrb_cnt = dpram_addra_post_done + 2) then  -- reads 2 extra addresses -> trigger time-tag
           dpram_valid_t <= '0';
@@ -1552,16 +1568,16 @@ begin
   ------------------------------------------------------------------------------
   cmp_wb_ddr_fifo : generic_sync_fifo
     generic map (
-      g_data_width             => 65,
-      g_size                   => 256,
-      g_show_ahead             => FALSE,
-      g_with_empty             => TRUE,
-      g_with_full              => TRUE,
-      g_with_almost_empty      => FALSE,
-      g_with_almost_full       => FALSE,
-      g_with_count             => FALSE,
-      g_almost_empty_threshold => 0,
-      g_almost_full_threshold  => 0
+      g_DATA_WIDTH             => 65,
+      g_SIZE                   => 256,
+      g_SHOW_AHEAD             => FALSE,
+      g_WITH_EMPTY             => TRUE,
+      g_WITH_FULL              => TRUE,
+      g_WITH_ALMOST_EMPTY      => FALSE,
+      g_WITH_ALMOST_FULL       => FALSE,
+      g_WITH_COUNT             => FALSE,
+      g_ALMOST_EMPTY_THRESHOLD => 0,
+      g_ALMOST_FULL_THRESHOLD  => 0
       )
     port map(
       rst_n_i        => sys_rst_n_i,
@@ -1615,8 +1631,7 @@ begin
 
   wb_ddr_fifo_wr <= wb_ddr_fifo_wr_en and not(wb_ddr_fifo_full);
 
-  wb_ddr_fifo_rd   <= wb_ddr_fifo_dreq and not(wb_ddr_fifo_empty) and not(wb_ddr_stall_t);
-  wb_ddr_fifo_dreq <= '1';
+  wb_ddr_fifo_rd <= not(wb_ddr_fifo_empty or wb_ddr_stall_t);
 
   ------------------------------------------------------------------------------
   -- RAM address counter (32-bit word address)
@@ -1758,16 +1773,16 @@ begin
 
     cmp_trigout_fifo : generic_sync_fifo
       generic map (
-        g_data_width             => t_trigout_data'length,
-        g_size                   => 16,
-        g_show_ahead             => TRUE,
-        g_with_empty             => TRUE,
-        g_with_full              => TRUE,
-        g_with_almost_empty      => FALSE,
-        g_with_almost_full       => FALSE,
-        g_with_count             => FALSE,
-        g_almost_empty_threshold => 0,
-        g_almost_full_threshold  => 0
+        g_DATA_WIDTH             => t_trigout_data'length,
+        g_SIZE                   => 16,
+        g_SHOW_AHEAD             => TRUE,
+        g_WITH_EMPTY             => TRUE,
+        g_WITH_FULL              => TRUE,
+        g_WITH_ALMOST_EMPTY      => FALSE,
+        g_WITH_ALMOST_FULL       => FALSE,
+        g_WITH_COUNT             => FALSE,
+        g_ALMOST_EMPTY_THRESHOLD => 0,
+        g_ALMOST_FULL_THRESHOLD  => 0
         )
       port map(
         rst_n_i        => sys_rst_n_i,

@@ -204,7 +204,6 @@ architecture rtl of fmc_adc_mezzanine is
   signal si570_sda_oe_n : std_logic;
 
   -- Interrupts (eic)
-  signal ddr_wr_fifo_empty_d : std_logic;
   signal ddr_wr_fifo_empty_p : std_logic;
   signal acq_end_irq_p       : std_logic;
   signal acq_end_extend      : std_logic;
@@ -482,7 +481,7 @@ begin
   --    DS18B20 (thermometer + unique ID)
   ------------------------------------------------------------------------------
 
-  cmp_fmc_onewine : entity work.xwb_ds182x_readout
+  cmp_fmc_onewire : entity work.xwb_ds182x_readout
     generic map (
       g_CLOCK_FREQ_KHZ   => 125000,
       g_USE_INTERNAL_PPS => TRUE)
@@ -497,37 +496,24 @@ begin
   ------------------------------------------------------------------------------
   -- FMC0 interrupt controller
   ------------------------------------------------------------------------------
-  cmp_fmc0_eic : entity work.fmc_adc_eic
-    port map(
-      rst_n_i       => sys_rst_n_i,
-      clk_sys_i     => sys_clk_i,
-      wb_adr_i      => cnx_slave_in(c_WB_SLAVE_FMC_EIC).adr(3 downto 2),  -- cnx_slave_in.adr is byte address
-      wb_dat_i      => cnx_slave_in(c_WB_SLAVE_FMC_EIC).dat,
-      wb_dat_o      => cnx_slave_out(c_WB_SLAVE_FMC_EIC).dat,
-      wb_cyc_i      => cnx_slave_in(c_WB_SLAVE_FMC_EIC).cyc,
-      wb_sel_i      => cnx_slave_in(c_WB_SLAVE_FMC_EIC).sel,
-      wb_stb_i      => cnx_slave_in(c_WB_SLAVE_FMC_EIC).stb,
-      wb_we_i       => cnx_slave_in(c_WB_SLAVE_FMC_EIC).we,
-      wb_ack_o      => cnx_slave_out(c_WB_SLAVE_FMC_EIC).ack,
-      wb_stall_o    => cnx_slave_out(c_WB_SLAVE_FMC_EIC).stall,
-      wb_int_o      => eic_irq_o,
-      irq_trig_i    => trigger_p,
-      irq_acq_end_i => acq_end_irq_p
-      );
 
-  -- Unused wishbone signals
-  cnx_slave_out(c_WB_SLAVE_FMC_EIC).err <= '0';
-  cnx_slave_out(c_WB_SLAVE_FMC_EIC).rty <= '0';
+  cmp_fmc_adc_eic : entity work.fmc_adc_eic
+    port map (
+      rst_n_i       => sys_rst_n_i,
+      clk_i         => sys_clk_i,
+      wb_i          => cnx_slave_in(c_WB_SLAVE_FMC_EIC),
+      wb_o          => cnx_slave_out(c_WB_SLAVE_FMC_EIC),
+      irq_trig_i    => trigger_p,
+      irq_acq_end_i => acq_end_irq_p,
+      int_o         => eic_irq_o);
 
   -- Detects end of adc core writing to ddr
-  p_ddr_wr_fifo_empty : process (sys_clk_i)
-  begin
-    if rising_edge(sys_clk_i) then
-      ddr_wr_fifo_empty_d <= ddr_wr_fifo_empty_i;
-    end if;
-  end process p_ddr_wr_fifo_empty;
-
-  ddr_wr_fifo_empty_p <= ddr_wr_fifo_empty_i and not(ddr_wr_fifo_empty_d);
+  cmp_ddr_wr_fifo_empty_posedge : entity work.gc_posedge
+    port map (
+      clk_i   => sys_clk_i,
+      rst_n_i => '1',
+      data_i  => ddr_wr_fifo_empty_i,
+      pulse_o => ddr_wr_fifo_empty_p);
 
   -- End of acquisition interrupt generation
   p_acq_end_extend : process (sys_clk_i)

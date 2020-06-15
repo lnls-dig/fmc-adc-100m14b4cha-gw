@@ -405,7 +405,7 @@ begin  -- architecture arch
     generic map (
       g_VENDOR_ID    => x"0000_10DC",
       g_DEVICE_ID    => x"4144_4301", -- "ADC1"
-      g_VERSION      => x"0100_0000",
+      g_VERSION      => x"0500_0000",
       g_CAPABILITIES => x"0000_0000",
       g_COMMIT_ID    => (others => '0'))
     port map (
@@ -437,26 +437,26 @@ begin  -- architecture arch
       master_i       => cnx_fmc_sync_master_in,
       master_o       => cnx_fmc_sync_master_out);
 
-  cmp_tm_time_valid_sync : gc_sync_ffs
+  cmp_tm_time_valid_sync : gc_sync
     port map (
-      clk_i    => clk_ref_125m,
-      rst_n_i  => '1',
-      data_i   => tm_time_valid,
-      synced_o => tm_time_valid_sync);
+      clk_i     => clk_ref_125m,
+      rst_n_a_i => '1',
+      d_i       => tm_time_valid,
+      q_o       => tm_time_valid_sync);
 
-  cmp_fmc_ddr_wr_fifo_sync : gc_sync_ffs
+  cmp_fmc_ddr_wr_fifo_sync : gc_sync
     port map (
-      clk_i    => clk_ref_125m,
-      rst_n_i  => '1',
-      data_i   => ddr_wr_fifo_empty,
-      synced_o => ddr_wr_fifo_empty_sync);
+      clk_i     => clk_ref_125m,
+      rst_n_a_i => '1',
+      d_i       => ddr_wr_fifo_empty,
+      q_o       => ddr_wr_fifo_empty_sync);
 
-  cmp_fmc_irq_sync : gc_sync_ffs
+  cmp_fmc_irq_sync : gc_sync
     port map (
-      clk_i    => clk_sys_62m5,
-      rst_n_i  => '1',
-      data_i   => fmc_irq,
-      synced_o => irq_vector(0));
+      clk_i     => clk_sys_62m5,
+      rst_n_a_i => '1',
+      d_i       => fmc_irq,
+      q_o       => irq_vector(0));
 
   cmp_fmc_adc_mezzanine : fmc_adc_mezzanine
     generic map (
