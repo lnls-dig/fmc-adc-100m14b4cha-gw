@@ -1,0 +1,359 @@
+\input texinfo    @c -*-texinfo-*-
+%
+% fmcadc100m14b4cha_firmware_manual.in - main file for the documentation
+%
+%%%%
+
+%------------------------------------------------------------------------------
+%
+%                         NOTE FOR THE UNAWARE USER
+%                         =========================
+%
+%    This file is a texinfo source. It isn't the binary file of some strange
+%    editor of mine. If you want ASCII, you should "make fmcadc100m14b4cha_firmware_manual.txt".
+%
+%------------------------------------------------------------------------------
+
+%
+% This is not a conventional info file...
+% I use three extra features:
+%   - The '%' as a comment marker, if at beginning of line ("\%" -> "%")
+%   - leading blanks are allowed (this is something I can't live without)
+%   - braces are automatically escaped when they appear in example blocks
+%
+
+@comment %**start of header
+@documentlanguage en
+@documentencoding UTF-8
+@setfilename fmcadc100m14b4cha_firmware_manual.info
+@settitle fmcadc100m14b4cha_firmware_manual
+@iftex
+@afourpaper
+@end iftex
+@c @paragraphindent 0
+@comment %**end of header
+
+@setchapternewpage off
+
+@set update-month August 2020
+
+@finalout
+
+@titlepage
+@title FmcAdc100m14b4cha Gateware Guide
+@subtitle @value{update-month} - Release 5.0
+@subtitle For AFC FMC Carrier
+@image{../fig/ohr_logo,4cm,,,pdf}
+@sp 10
+@flushright
+@image{../fig/cern_logo,3cm,,,pdf}
+@end flushright
+@author Matthieu Cattin (CERN)
+@author Dimitrios Lampridis (CERN)
+@author Lucas Russo (LNLS)
+@end titlepage
+@headings single
+
+@iftex
+@contents
+@end iftex
+
+@c ##########################################################################
+@node Top
+@top Introduction
+
+This document describes the gateware developed to support the FmcAdc100m14b4cha (later refered to as fmc-adc) mezzanine card on the AFCC@footnote{@uref{ihttps://ohwr.org/project/afc}} carrier card.
+The gateware is the HDL code used to generate the bitstream that configures the FPGA on the carrier (sometimes also called firmware).
+The gateware architecture is described in detail.
+The configuration and operation of the fmc-adc is also explained.
+On the other hand, this manual is not intended to provide information about the software used to control the fmc-adc board, nor details about it's hardware design.
+
+@c ##########################################################################
+@node Repositories and Releases
+@chapter Repositories and Releases
+
+This project is hosted on Github, but hopefully soon-to-be-merged into the upstream
+project on the Open Hardware Repository (@uref{http://www.ohwr.org/projects/fmc-adc-100m14b4cha-gw}),
+at the following link:@*
+@uref{https://github.com/lnls-dig/fmc-adc-100m14b4cha-gw/tree/afcv3-port}
+
+
+Here a list of resources that you can find on the project page.
+@table @code
+
+@item Documents@footnote{@uref{https://github.com/lnls-dig/fmc-adc-100m14b4cha-gw/releases}}
+contains the @t{.bit} FPGA binary files and the @t{.pdf} documentation for every official release.
+
+@item Repository@footnote{@uref{https://github.com/lnls-dig/fmc-adc-100m14b4cha-gw}}
+contains the git repository of the project.
+
+@end table
+
+On the repository the official releases have a tag named
+@code{afc-fmc-adc-v#maj.#min} where @code{#maj} represent the major release
+version of the gateware and @code{#min} the minor one (e.g @code{afc-fmc-adc-v5.0}).
+The released FPGA binary files follow the same naming convention.
+
+The git commit hash has to be written in the sdb meta-information, therefore a release consists of two commits.
+The commit coming right after the tagged one contains the updated sdb meta-information file, the ise project and the synthesis, place&route, timing, and the reports.
+
+@b{Note:} If you got this from the repository (as opposed to a named @i{tar.gz} or @i{pdf} file) it may happen that you are looking at a later commit than the release this manual claims to document.
+It is a fact of life that developers forget to re-read and fix documentation while updating the code. In that case, please run ``@code{git describe HEAD}'' to ensure where you are.
+
+@c ==========================================================================
+@section Software Support
+
+For information on the userspaces HALCS software support, please refer to the following project:@*
+@uref{https://github.com/lnls-dig/halcs}
+
+
+@c ##########################################################################
+@page
+@node About source code
+@chapter About Source Code
+
+@c ==========================================================================
+@section Build from Sources
+
+The fmc-adc hdl design make use of the @command{hdlmake}@footnote{@uref{http://www.ohwr.org/projects/hdl-make}} tool.
+It automatically fetches the required hdl cores and libraries. It also generates Makefiles for synthesis/par and simulation.
+
+Here is the procedure to build the FPGA binary image from the hdl source.
+
+@enumerate
+@item Install @command{hdlmake} (version 3.0).
+@item Get fmc-adc hdl AFC sources while still not in master.@*
+      @code{git clone --recursive --branch afcv3-port https://github.com/lnls-dig/fmc-adc-100m14b4cha-gw <src_dir>}
+@item Goto the synthesis directory.@*
+      @code{cd <src_dir>/hdl/syn/<carrier>}
+@item Fetch the dependencies and generate a synthesis Makefile.@*
+      @code{hdlmake}
+@item Perform version bundling and synthesis, place, route and generate FPGA bitstream.@*
+      @code{./build_synthesis_sdb.sh && make}
+@item Alternatively you can issue a more complete synthesis command to perform everything at once.@*
+      @code{./build_synthesis_sdb.sh && hdlmake -a makefile && time make && date}
+@end enumerate
+
+@c TODO explain how to fetch dependencies with git submodules.
+@c TODO explain how to build without hdlmake.
+
+@c ==========================================================================
+@section Source Code Organisation
+
+@table @file
+@item hdl/rtl/
+      ADC specific hdl sources.
+@item hdl/rtl/wb_gen/
+      ADC specific @command{wbgen2} sources, html documentation and C header file.
+@item hdl/ip_cores/
+      Location of fetched and generated hdl cores and libraries.
+@item hdl/syn/<carrier>
+      Synthesis directory for selected carrier. This is where the synthesis top manifest and the ISE/Vivado project are stored.
+@item hdl/top/<carrier>
+      Top directory for selected carrier. This is where the top-level entity is store.
+@item hdl/testbench/<module>
+      Carrier/Modules related simulation files and testbenches.
+@end table
+
+It could happen that a hdl source directory contains extra source files that are not used in the current gateware release.
+In order to identify the source files used in a given release, refer to the @file{Manifest.py} files.
+
+@c ==========================================================================
+@section Dependencies
+
+The fmc-adc gateware depends on the following hdl cores and libraries:
+@table @b
+@item general-cores-lnls
+      @code{repo  : https://github.com/lnls-dig/general-cores.git}@*
+      @code{commit: 200062d6e0c84fc0005efad3618edb32eb440ed9}
+@item infra-cores
+      @code{repo  : https://github.com/lnls-dig/infra-cores.git}@*
+      @code{commit: 14ed99438ace2d523928768d88aa837498df5165}
+@item afc-gw
+      @code{repo  : https://github.com/lnls-dig/afc-gw.git}@*
+      @code{commit: d42f19894a7d8f999bf940863e3cec6320c0832a}
+@end table
+
+@c ##########################################################################
+@page
+@node Architecture
+@chapter Architecture
+
+This chapter describes the internal blocks of the FPGA for AFC carrier.
+The gateware is designed around one or several Wishbone@footnote{@uref{http://opencores.org/opencores@comma{}wishbone}} bus interconnects.
+@c FIXME  broken @comma{} to generate url link (prints 'comma{}' instead of ',')
+
+@c ==========================================================================
+@section AFC carrier
+
+In this version of the gateware all blocks (except the memory controller) are connected to the PCIe bridge interface using the same Wishbone bus (@i{main} bus).
+The ADC samples are written and read to/from the DDR memory using a direct AXI Stream connection.
+Due to its size, the DDR memory is not mapped on the @i{main} Wishbone bus and can be accessed through PIO or DMA from the host.
+@ref{fig:afc_fw_arch} illustrates the fmc-adc gateware architecture on the AFC carrier.
+A crossbar from the general-cores@footnote{@uref{https://www.github.com/lnls-dig/general-cores}} library is used to map the slaves in the Wishbone address space.
+
+@float Figure,fig:afc_fw_arch
+@center @image{../fig/afc_fw_arch, 12cm,,,pdf}
+@caption{FMC-ADC gateware architecture on AFC carrier.}
+@end float
+
+@sp 1
+
+There is one Wishbone bus interconnect in the design.
+@table @b
+@item Mapped WB bus (from PCIe interconnect to all slaves)
+      This bus connects all the peripherals to the PCIe interconnect core.@*
+      Data: 32-bit, address: 32-bit (byte aligned), clock: system clock (125MHz).
+@end table
+
+
+@ref{tab:afc_memory_map} shows the Wishbone slaves mapping and hierarchy.
+The first column represents the byte address offset from the start of the Wishbone address space (BAR 4).
+
+@float Table,tab:afc_memory_map
+@include afc_wb_tree.txt
+@caption{Wishbone bus memory mapping (BAR 4).}
+@end float
+
+@sp 1
+
+The Wishbone crossbar also implements SDB@footnote{@uref{http://www.ohwr.org/projects/fpga-config-space}} records. Those records describe the Wishbone slaves and their mapping on the bus.
+The SDB records ROM must be located at offset @code{0x0}.
+In order to identify the gateware, SDB meta-information records are used.
+The 'Integration', 'Top module repository url' and 'Synthesis tool information'  meta-information records are used in the design.
+Below is a description of the fields and their content in the fmc-adc design on the AFC carrier.
+
+@table @b
+@item Top module repository url
+      repo_url = "https://github.com/lnls-dig/fmc-adc-100m14b4cha-gw"@*
+@item Synthesis tool information
+      syn_module_name  = "afc_ref_design"@*
+      syn_commit_id    = git log -1 --format="%H" | cut -c1-32 @*
+      syn_tool_name    = "VIVADO"@*
+      syn_tool_version = bcd encoded synthesis tool version@*
+      syn_date         = bcd encoded synthesis date, format yyyymmdd@*
+      syn_username     = username of person who synthesised the design
+@end table
+
+
+All of the Wisbone addressable slaves have a SDB Vendor (VID )and Device (DID )IDs associated
+to it, so the software can identify which module is located at that offset. @ref{tab:afc_sdb_ids}
+shows the SDB Vendor/Device IDs of the modules used in the design.
+
+@ref{tab:afc_sdb_ids} shows the SDB Vendor/Device IDs of the modules used in the design.
+
+@float Table,tab:afc_sdb_ids
+@include afc_sdb_ids_tree.txt
+@caption{AFC SDB IDs used in the design.}
+@end float
+
+@sp 1
+
+
+Note that some of the cores from the general-cores library are based on cores from
+OpenCores@footnote{@uref{http://opencores.org/}}. Therefore, the documentation for those cores is hosted on the OpenCores website.
+
+@c --------------------------------------------------------------------------
+@subsection Clock Domains
+
+The SPEC version of the fmc-adc design has five different clock domains. They are listed in the following table.
+
+@float
+@multitable {@code{sys_clk}}{ADC data de-serialiser clock}{125.00 MHz}{400MHz LTC2174 (mezzanine)}
+@headitem Name @tab Description @tab Frequency @tab Source
+@item @code{sys_clk} @tab Main system clock @tab 100.00 MHz @tab 100MHz VCO (carrier)
+@item @code{ddr_clk} @tab DDR interface clock @tab 200.00 MHz @tab 100MHz TCXO (carrier)
+@item @code{aux_clk} @tab Trigger MLVDS clock @tab 125.00 MHz @tab 69.44MHz MicroTCA.4 TCLKA (carrier)
+@item @code{fs_clk} @tab Sampling clock @tab 100.00 MHz @tab 400MHz LTC2174 (mezzanine)
+@item @code{serdes_clk} @tab ADC data de-serialiser clock @tab 800.00 MHz @tab 400MHz LTC2174 (mezzanine)
+@item @code{pcie_clk} @tab PCIe clock @tab 125.00 MHz @tab 100MHz PCIe tranceiver MicroTCA.4 FCLKA (carrier)
+@end multitable
+@end float
+
+@sp 1
+
+@c --------------------------------------------------------------------------
+@c macro to allow includes from wbgen2 generated tex register documentation
+@macro regsection{name}
+@section \name\
+@end macro
+
+@c --------------------------------------------------------------------------
+@page
+@appendix ADC Core Registers
+The registers documentation have been generated using @command{wbgen2}@footnote{@uref{http://www.ohwr.org/projects/wishbone-gen}}.
+@anchor{ADC Core Registers}
+   @include fmc_adc_100Ms_csr.tex
+
+@c --------------------------------------------------------------------------
+@page
+@appendix FMC-ADC Embedded Interrupt Controller Registers
+The registers documentation have been generated using @command{wbgen2}@footnote{@uref{http://www.ohwr.org/projects/wishbone-gen}}.
+@anchor{FMC-ADC Embedded Interrupt Controller Registers}
+   @include fmc_adc_eic.tex
+
+@c --------------------------------------------------------------------------
+@page
+@appendix Vectored Interrupt Controller
+The registers documentation have been generated using @command{wbgen2}@footnote{@uref{http://www.ohwr.org/projects/wishbone-gen}}.
+@anchor{Vectored Interrupt Controller}
+   @include wb_vic.tex
+
+@c --------------------------------------------------------------------------
+@page
+@appendix Time-tagging Core Registers
+The registers documentation have been generated using @command{wbgen2}@footnote{@uref{http://www.ohwr.org/projects/wishbone-gen}}.
+@anchor{Time-tagging Core Registers}
+   @include timetag_core_regs.tex
+
+@c --------------------------------------------------------------------------
+@page
+@appendix ADC Management Registers
+The registers documentation have been generated using @command{wbgen2}@footnote{@uref{http://www.ohwr.org/projects/wishbone-gen}}.
+@anchor{ADC Management Registers}
+   @include afc_mgmt_regs_wb.tex
+
+@c --------------------------------------------------------------------------
+@page
+@appendix Acquisition Core Registers
+The registers documentation have been generated using @command{wbgen2}@footnote{@uref{http://www.ohwr.org/projects/wishbone-gen}}.
+@anchor{Acquisition Core Registers}
+   @include wb_acq_core.tex
+
+@c --------------------------------------------------------------------------
+@page
+@appendix MicroTCA.4 MLVDS Trigger Interface Registers
+The registers documentation have been generated using @command{wbgen2}@footnote{@uref{http://www.ohwr.org/projects/wishbone-gen}}.
+@anchor{MicroTCA.4 MLVDS Trigger Interface Registers}
+   @include wb_trigger_iface_regs_wb.tex
+
+@c --------------------------------------------------------------------------
+@page
+@appendix Trigger Multiplexor Registers
+The registers documentation have been generated using @command{wbgen2}@footnote{@uref{http://www.ohwr.org/projects/wishbone-gen}}.
+@anchor{Trigger Multiplexor Registers}
+   @include wb_trigger_mux_regs_wb.tex
+
+@c --------------------------------------------------------------------------
+@page
+@appendix Glossary
+@section Glossary
+
+@table @b
+@item Local bus
+      The @b{local bus} is the interface between the PCIe interface and the FPGA.
+@item Pulse
+      In this document, a @b{pulse} refers to a one clock tick wide pulse.
+@item Tick
+      A clock @b{tick} corresponds to a period of the clock.
+@item SDB
+      Self-Describing Bus
+@item VIC
+      Vectored Interrupt Controller
+@item EIC
+      Embedded Interrupt Controller
+@end table
+
+
+
+@bye
