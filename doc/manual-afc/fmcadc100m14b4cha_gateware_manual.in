@@ -273,6 +273,43 @@ The SPEC version of the fmc-adc design has five different clock domains. They ar
 @sp 1
 
 @c --------------------------------------------------------------------------
+@subsection PCIe Core
+
+This block is the interface between the Xilinx PCIe Integrated Block
+@footnote{https://www.xilinx.com/support/documentation/ip_documentation/pcie_7x/v3_3/pg054-7series-pcie.pdf}
+to the other blocks in the FPGA, thourgh BAR4,
+and to DDR memory, though BAR2. BAR0 is reserved to PCIe Core configuration registers.
+
+Currently, the PCIe core supports four lane PCI Express Generation 1.1, implementing the transaction layers on FPGA logic.
+PHY and Data Link layers are taken care by the Xilinx PCIe Integrated Block.
+The PCIe core is used to access the FPGA registers, but also to generate INTx/MSI interrupts and DMA transactions.
+BAR4 (Base Address Register) allows access to the Wishbone address space.
+BAR2 allows access to DDR address space and BAR0 is connected to the internal PCIe core registers.
+
+The PCIe core is made of a Wishbone bus master mapped to BAR4 and a DMA controller mapped to BAR2.
+The DMA controller reads/writes to the DDR controller through a direct AXI Stream interface.
+The PCIe core Wishbone interfaces (masters and slave) are 32-bit data width and 64-bit word aligned addresses,
+but the address is shifted right by 3 at the PCIe core. As all of the Wishbone register
+space is BYTE aligned in this gateware, the user needs to increment the address by 0x4 in addition
+of the 64-bit alignement requirement for each new register. @ref{tab:afc_pcie_core_address} shows
+the addressing scheme for the Wishbone space.
+
+@float Table,tab:afc_pcie_core_address
+@include afc_pcie_core_address.txt
+@caption{PCIe core address space scheme for Wishbone (BAR 4).}
+@end float
+
+As all of the modules are BYTE addressed, registers are effectively
+separated by 0x4 in this scheme, so bit 2 onwards must be incremented
+to access consecutive registers. This translates to an increment of:
+
+  increment = 2^(3 (64-bit alignement) + 2 (byte address)) = 32 = 0x20
+
+@b{Note:} It would not be beneficial to insert an address converter (for non-interleaved data read)
+between the PCIe core and the memory controller, because the DDR memory access is not efficient when
+reading non-consecutive addresses.
+
+@c --------------------------------------------------------------------------
 @c macro to allow includes from wbgen2 generated tex register documentation
 @macro regsection{name}
 @section \name\
@@ -340,8 +377,6 @@ The registers documentation have been generated using @command{wbgen2}@footnote{
 @section Glossary
 
 @table @b
-@item Local bus
-      The @b{local bus} is the interface between the PCIe interface and the FPGA.
 @item Pulse
       In this document, a @b{pulse} refers to a one clock tick wide pulse.
 @item Tick
