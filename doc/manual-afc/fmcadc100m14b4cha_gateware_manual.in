@@ -283,11 +283,13 @@ and to DDR memory, through BAR2. BAR0 is reserved to PCIe Core configuration reg
 Currently, the PCIe core supports four lane PCI Express Generation 1.1, implementing the transaction layers on FPGA logic.
 PHY and Data Link layers are taken care by the Xilinx PCIe Integrated Block.
 The PCIe core is used to access the FPGA registers, but also to generate INTx/MSI interrupts and DMA transactions.
-BAR4 (Base Address Register) allows access to the Wishbone address space.
-BAR2 allows access to DDR address space and BAR0 is connected to the internal PCIe core registers.
+BAR4 (Base Address Register) allows access to the Wishbone address space, BAR2
+allows access to DDR address space and BAR0 is connected to the internal PCIe
+core registers.
 
-The PCIe core is made of a Wishbone bus master mapped to BAR4 and a DMA controller mapped to BAR2.
-The DMA controller reads/writes to the DDR controller through a direct AXI Stream interface.
+The PCIe core is made of a Wishbone bus master mapped to BAR4 and the DDR memory
+mapped to BAR2, accessed through DMA or PIO. The DMA controller reads/writes to
+the DDR controller through a direct AXI Stream interface.
 The PCIe core Wishbone interfaces (masters and slave) are 32-bit data width and 64-bit word aligned addresses,
 but the address is shifted right by 3 at the PCIe core. As all of the Wishbone register
 space is BYTE aligned in this gateware, the user needs to increment the address by 0x4 in addition
@@ -395,12 +397,12 @@ It also explains how the software is expected to control the fmc-adc acquisition
 
 @ref{fig:adc_core_sys_clk} shows the Acquisition core acquisition logic.
 The heart of the acquisition logic is a state machine driven by user commands (start, stop), the trigger signal and counters events (e.g. pre-trig done, etc...).
-The ADC samples are routed along a datapath (bold arrows), which depends on the acquisition mode.
+The data samples are routed along a datapath (bold arrows), which depends on the acquisition mode.
 It is explained in detail in the @ref{Acquisition Core Controller Single-shot Mode} and @ref{Acquisition Core Controller Multi-shot Mode}.
 The data channels and the trigger are concatenated together and fed to a FIFO to be synchronised between the sampling clock domain and the system clock domain.
 Along the datapath, we call @i{sample} the data channel width (in this case, a
 64-bit vector containing a sample for each channel).
-At the output of the ADC core, a flow control FIFO allows to cope with the
+At the output of the Acquisition core, a flow control FIFO allows to cope with the
 memory controller temporary unavailabilities (due to DDR refresh cycles) (FIXME
 no trigger time-tag).
 
@@ -427,7 +429,7 @@ Commands are sent to the state machine by writing in the @code{FSM_CMD} field of
 
 When a start command is received, the state machine goes to @code{PRE_TRIG} and
 stays in this state until the programmed number of pre-trigger samples are recorded.
-After that, it goes in @code{WAIT_TRIG} state and continue recording sample to memory.
+After that, it goes in @code{WAIT_TRIG} state and continue recording samples to memory.
 
 If the number of programmed pre-trigger samples is zero (only possible when in
 triggered mode), the state machine skips the @code{PRE_TRIG} state and it goes
@@ -492,7 +494,8 @@ In order to allow the software to retrieve the requested samples (around the tri
 
 @b{Note:} The value stored in the @i{Trigger address} register is a byte address.
 
-@b{Note:} Every new acquisition starts writing at address configured at the @i{} (@pxref{Acquisition Core Registers}).
+@b{Note:} Every new acquisition starts writing at ithe address configured at the @i{DDR3 Start Address}
+and end at the @i{DDR3 End Address} (@pxref{Acquisition Core Registers}).
 
 @ref{fig:mem_single_shot} and @ref{fig:mem_single_shot_overlap} illustrate the use of the DDR memory as a circular buffer.
 The acquisition state machine is also represented.
