@@ -256,7 +256,7 @@ OpenCores@footnote{@uref{http://opencores.org/}}. Therefore, the documentation f
 @c --------------------------------------------------------------------------
 @subsection Clock Domains
 
-The SPEC version of the fmc-adc design has five different clock domains. They are listed in the following table.
+The AFC version of the fmc-adc design has six different clock domains. They are listed in the following table.
 
 @float
 @multitable {@code{sys_clk}}{ADC data de-serialiser clock}{125.00 MHz}{400MHz LTC2174 (mezzanine)}
@@ -277,8 +277,8 @@ The SPEC version of the fmc-adc design has five different clock domains. They ar
 
 This block is the interface between the Xilinx PCIe Integrated Block
 @footnote{https://www.xilinx.com/support/documentation/ip_documentation/pcie_7x/v3_3/pg054-7series-pcie.pdf}
-to the other blocks in the FPGA, thourgh BAR4,
-and to DDR memory, though BAR2. BAR0 is reserved to PCIe Core configuration registers.
+to the other blocks in the FPGA, through BAR4,
+and to DDR memory, through BAR2. BAR0 is reserved to PCIe Core configuration registers.
 
 Currently, the PCIe core supports four lane PCI Express Generation 1.1, implementing the transaction layers on FPGA logic.
 PHY and Data Link layers are taken care by the Xilinx PCIe Integrated Block.
