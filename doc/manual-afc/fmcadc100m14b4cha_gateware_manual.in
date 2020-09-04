@@ -236,7 +236,7 @@ Below is a description of the fields and their content in the fmc-adc design on 
 @end table
 
 
-All of the Wisbone addressable slaves have a SDB Vendor (VID )and Device (DID )IDs associated
+All of the Wisbone addressable slaves have a SDB Vendor (VID) and Device (DID) IDs associated
 to it, so the software can identify which module is located at that offset. @ref{tab:afc_sdb_ids}
 shows the SDB Vendor/Device IDs of the modules used in the design.
 
