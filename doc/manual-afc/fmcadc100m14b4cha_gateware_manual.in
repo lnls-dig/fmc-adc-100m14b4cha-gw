@@ -554,9 +554,57 @@ register.
 @node Trigger Interface Controller
 @subsection Trigger Interface Controller
 
+The Trigger Interface Controller is responsible for shaping and interfacing
+with the external MicroTCA.4 MLVDS bus. This module has the abillity to send
+and receive pulses to/from the backplane in any of the 8 available channels.
+The user can the the direction, direction bit polarity, as well as transmitter
+length pulse and receiver debouncing length by means of control registers.
+There is also trasmitter/receiver pulse counters that can be queried for each channel
+(@pxref{MicroTCA.4 MLVDS Trigger Interface Registers}).
+
+@ref{fig:afc_trigger_phys} shows a block diagram of the features present in this
+module.
+
+@float Figure,fig:afc_trigger_phys
+@center @image{../fig/afc_trigger_phys, 15cm,,,pdf}
+@caption{AFC physical trigger interface controller.}
+@end float
+
+
+@b{Note:} Even though most of the features in this gateware are independent of
+the FMC being used, this module is an exception to this, as it controls a shared
+feature between the two FMC-ADC core.
+
 @c --------------------------------------------------------------------------
 @node Trigger Multiplexor Controller
 @subsection Trigger Multiplexor Controller
+
+The Trigger Multiplexor Controller is responsible for routing triggers among
+FPGA modules. In this gateware, it routes triggers from the Trigger Interface
+Controller and the FMC-ADC Core to the Acquisition Module. So, in effect,
+the user can select which one the of 8 MLVDS triggers or the FMC front panel
+trigger input will start an acquistion.
+
+The user can control and query the status of this module by means of registers
+(@pxref{Trigger Multiplexor Registers}).
+
+@ref{fig:afc_trigger_logic} shows a block diagram representing the inputs and
+outputs of this module.
+
+@float Figure,fig:afc_trigger_logic
+@center @image{../fig/afc_trigger_logic, 9cm,,,pdf}
+@caption{Trigger multiplexor controller.}
+@end float
+
+The receiving trigger lines @i{recv trig. in 0} to @i{recv trig. n} in
+@ref{fig:afc_trigger_logic} represent the 8 MIcroTCA.4 MLVDS bus lines,
+the @i{internal trig. in 0} to @i{internal trig. in m} represent the FMC-ADC
+core front panel input trigger, the @i{recv trig. out 0} represents the connection
+to the Acquisition core channel 0 of each corresponding instance (i.e., Trigger
+Multiplexor instance 0 is connected to Acquisition Core instance 0) and
+@i{transm trig. out 0} represents the connection to all 8 MicroTCA.4 MLVDS
+bus lines. The lines @i{transm trig. in 0} to @i{transm trig. in n} are not
+connected in this design.
 
 
 @c ==========================================================================
