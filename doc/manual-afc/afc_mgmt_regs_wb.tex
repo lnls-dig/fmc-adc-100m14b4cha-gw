@@ -1,0 +1,44 @@
+@regsection Memory map summary
+@multitable  @columnfractions .10 .15 .15 .55
+@headitem Address @tab Type @tab Prefix @tab Name
+@item @code{0x0} @tab
+REG @tab
+@code{clk_distrib} @tab
+Clock distribution control register
+@item @code{0x4} @tab
+REG @tab
+@code{dummy} @tab
+Dummy
+@end multitable 
+@regsection @code{clk_distrib} - Clock distribution control register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{SI57X_OE}
+@tab @code{0} @tab 
+Si 571 Output Enable
+@item @code{31...1}
+@tab R/O @tab
+@code{RESERVED}
+@tab @code{X} @tab 
+Reserved
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{si57x_oe} @tab Si57x output enable pin, check datasheet for proper voltage standard and signal polarity
+@item @code{reserved} @tab Ignore on read, write with 0's.
+@end multitable
+@regsection @code{dummy} - Dummy
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{RESERVED}
+@tab @code{X} @tab 
+Reserved
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{reserved} @tab Ignore on read, write with 0's.
+@end multitable

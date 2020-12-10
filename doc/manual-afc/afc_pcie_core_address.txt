@@ -1,0 +1,13 @@
+@verbatim
+
+The Wishbone address is presented by the PCIe core as:
+
+  bit 31  ...  bit 3   bit 2   bit 1   bit 0
+   A31    ...    A3      A2     A1      A0
+
+The PCIe Core FPGA gateware shifts right the Wishbone address by 3:
+
+  bit 31   bit 30   bit 29  bit 28  ...  bit 3   bit 2   bit 1   bit 0
+   '0'      '0'     '0'       A31   ...    A6     A5      A4      A3
+
+@end verbatim

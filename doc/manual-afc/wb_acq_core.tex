@@ -1,0 +1,1504 @@
+@regsection Memory map summary
+@multitable  @columnfractions .10 .15 .15 .55
+@headitem Address @tab Type @tab Prefix @tab Name
+@item @code{0x0} @tab
+REG @tab
+@code{ctl} @tab
+Control register
+@item @code{0x4} @tab
+REG @tab
+@code{sta} @tab
+Status register
+@item @code{0x8} @tab
+REG @tab
+@code{trig_cfg} @tab
+Trigger configuration
+@item @code{0xc} @tab
+REG @tab
+@code{trig_data_cfg} @tab
+Trigger data config threshold
+@item @code{0x10} @tab
+REG @tab
+@code{trig_data_thres} @tab
+Trigger data threshold
+@item @code{0x14} @tab
+REG @tab
+@code{trig_dly} @tab
+Trigger delay
+@item @code{0x18} @tab
+REG @tab
+@code{sw_trig} @tab
+Software trigger
+@item @code{0x1c} @tab
+REG @tab
+@code{shots} @tab
+Number of shots
+@item @code{0x20} @tab
+REG @tab
+@code{trig_pos} @tab
+Trigger address register
+@item @code{0x24} @tab
+REG @tab
+@code{pre_samples} @tab
+Pre-trigger samples
+@item @code{0x28} @tab
+REG @tab
+@code{post_samples} @tab
+Post-trigger samples
+@item @code{0x2c} @tab
+REG @tab
+@code{samples_cnt} @tab
+Samples counter
+@item @code{0x30} @tab
+REG @tab
+@code{ddr3_start_addr} @tab
+DDR3 Start Address
+@item @code{0x34} @tab
+REG @tab
+@code{ddr3_end_addr} @tab
+DDR3 End Address
+@item @code{0x38} @tab
+REG @tab
+@code{acq_chan_ctl} @tab
+Acquisition channel control
+@item @code{0x3c} @tab
+REG @tab
+@code{ch0_desc} @tab
+Channel 0 Description
+@item @code{0x40} @tab
+REG @tab
+@code{ch0_atom_desc} @tab
+Channel 0 Atom Description
+@item @code{0x44} @tab
+REG @tab
+@code{ch1_desc} @tab
+Channel 1 Description
+@item @code{0x48} @tab
+REG @tab
+@code{ch1_atom_desc} @tab
+Channel 1 Atom Description
+@item @code{0x4c} @tab
+REG @tab
+@code{ch2_desc} @tab
+Channel 2 Description
+@item @code{0x50} @tab
+REG @tab
+@code{ch2_atom_desc} @tab
+Channel 2 Atom Description
+@item @code{0x54} @tab
+REG @tab
+@code{ch3_desc} @tab
+Channel 3 Description
+@item @code{0x58} @tab
+REG @tab
+@code{ch3_atom_desc} @tab
+Channel 3 Atom Description
+@item @code{0x5c} @tab
+REG @tab
+@code{ch4_desc} @tab
+Channel 4 Description
+@item @code{0x60} @tab
+REG @tab
+@code{ch4_atom_desc} @tab
+Channel 4 Atom Description
+@item @code{0x64} @tab
+REG @tab
+@code{ch5_desc} @tab
+Channel 5 Description
+@item @code{0x68} @tab
+REG @tab
+@code{ch5_atom_desc} @tab
+Channel 5 Atom Description
+@item @code{0x6c} @tab
+REG @tab
+@code{ch6_desc} @tab
+Channel 6 Description
+@item @code{0x70} @tab
+REG @tab
+@code{ch6_atom_desc} @tab
+Channel 6 Atom Description
+@item @code{0x74} @tab
+REG @tab
+@code{ch7_desc} @tab
+Channel 7 Description
+@item @code{0x78} @tab
+REG @tab
+@code{ch7_atom_desc} @tab
+Channel 7 Atom Description
+@item @code{0x7c} @tab
+REG @tab
+@code{ch8_desc} @tab
+Channel 8 Description
+@item @code{0x80} @tab
+REG @tab
+@code{ch8_atom_desc} @tab
+Channel 8 Atom Description
+@item @code{0x84} @tab
+REG @tab
+@code{ch9_desc} @tab
+Channel 9 Description
+@item @code{0x88} @tab
+REG @tab
+@code{ch9_atom_desc} @tab
+Channel 9 Atom Description
+@item @code{0x8c} @tab
+REG @tab
+@code{ch10_desc} @tab
+Channel 10 Description
+@item @code{0x90} @tab
+REG @tab
+@code{ch10_atom_desc} @tab
+Channel 10 Atom Description
+@item @code{0x94} @tab
+REG @tab
+@code{ch11_desc} @tab
+Channel 11 Description
+@item @code{0x98} @tab
+REG @tab
+@code{ch11_atom_desc} @tab
+Channel 11 Atom Description
+@item @code{0x9c} @tab
+REG @tab
+@code{ch12_desc} @tab
+Channel 12 Description
+@item @code{0xa0} @tab
+REG @tab
+@code{ch12_atom_desc} @tab
+Channel 12 Atom Description
+@item @code{0xa4} @tab
+REG @tab
+@code{ch13_desc} @tab
+Channel 13 Description
+@item @code{0xa8} @tab
+REG @tab
+@code{ch13_atom_desc} @tab
+Channel 13 Atom Description
+@item @code{0xac} @tab
+REG @tab
+@code{ch14_desc} @tab
+Channel 14 Description
+@item @code{0xb0} @tab
+REG @tab
+@code{ch14_atom_desc} @tab
+Channel 14 Atom Description
+@item @code{0xb4} @tab
+REG @tab
+@code{ch15_desc} @tab
+Channel 15 Description
+@item @code{0xb8} @tab
+REG @tab
+@code{ch15_atom_desc} @tab
+Channel 15 Atom Description
+@item @code{0xbc} @tab
+REG @tab
+@code{ch16_desc} @tab
+Channel 16 Description
+@item @code{0xc0} @tab
+REG @tab
+@code{ch16_atom_desc} @tab
+Channel 16 Atom Description
+@item @code{0xc4} @tab
+REG @tab
+@code{ch17_desc} @tab
+Channel 17 Description
+@item @code{0xc8} @tab
+REG @tab
+@code{ch17_atom_desc} @tab
+Channel 17 Atom Description
+@item @code{0xcc} @tab
+REG @tab
+@code{ch18_desc} @tab
+Channel 18 Description
+@item @code{0xd0} @tab
+REG @tab
+@code{ch18_atom_desc} @tab
+Channel 18 Atom Description
+@item @code{0xd4} @tab
+REG @tab
+@code{ch19_desc} @tab
+Channel 19 Description
+@item @code{0xd8} @tab
+REG @tab
+@code{ch19_atom_desc} @tab
+Channel 19 Atom Description
+@item @code{0xdc} @tab
+REG @tab
+@code{ch20_desc} @tab
+Channel 20 Description
+@item @code{0xe0} @tab
+REG @tab
+@code{ch20_atom_desc} @tab
+Channel 20 Atom Description
+@item @code{0xe4} @tab
+REG @tab
+@code{ch21_desc} @tab
+Channel 21 Description
+@item @code{0xe8} @tab
+REG @tab
+@code{ch21_atom_desc} @tab
+Channel 21 Atom Description
+@item @code{0xec} @tab
+REG @tab
+@code{ch22_desc} @tab
+Channel 22 Description
+@item @code{0xf0} @tab
+REG @tab
+@code{ch22_atom_desc} @tab
+Channel 22 Atom Description
+@item @code{0xf4} @tab
+REG @tab
+@code{ch23_desc} @tab
+Channel 23 Description
+@item @code{0xf8} @tab
+REG @tab
+@code{ch23_atom_desc} @tab
+Channel 23 Atom Description
+@end multitable 
+@regsection @code{ctl} - Control register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab W/O @tab
+@code{FSM_START_ACQ}
+@tab @code{0} @tab 
+State machine acquisition_start command (ignore on read)
+@item @code{1}
+@tab W/O @tab
+@code{FSM_STOP_ACQ}
+@tab @code{0} @tab 
+State machine stop command (ignore on read)
+@item @code{15...2}
+@tab R/W @tab
+@code{RESERVED1}
+@tab @code{0} @tab 
+Reserved1
+@item @code{16}
+@tab R/W @tab
+@code{FSM_ACQ_NOW}
+@tab @code{0} @tab 
+Acquire data immediately and don't wait for any trigger (ignore on read)
+@item @code{31...17}
+@tab R/W @tab
+@code{RESERVED2}
+@tab @code{0} @tab 
+Reserved2
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{fsm_start_acq} @tab 1: ACQ_START (start acquisition, only when FSM is idle)
+@item @code{fsm_stop_acq} @tab 1: ACQ_STOP (stop acquisition, anytime)
+@item @code{reserved1} @tab Ignore on read, write with 0's
+@item @code{fsm_acq_now} @tab 1: Acquire immediately@*0: Wait for trigger
+@item @code{reserved2} @tab Ignore on read, write with 0's
+@end multitable
+@regsection @code{sta} - Status register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{2...0}
+@tab R/O @tab
+@code{FSM_STATE}
+@tab @code{X} @tab 
+State machine status
+@item @code{3}
+@tab R/O @tab
+@code{FSM_ACQ_DONE}
+@tab @code{X} @tab 
+FSM acquisition status
+@item @code{7...4}
+@tab R/O @tab
+@code{RESERVED1}
+@tab @code{X} @tab 
+Reserved
+@item @code{8}
+@tab R/O @tab
+@code{FC_TRANS_DONE}
+@tab @code{X} @tab 
+External flow control transfer status
+@item @code{9}
+@tab R/O @tab
+@code{FC_FULL}
+@tab @code{X} @tab 
+External flow control FIFO full status
+@item @code{15...10}
+@tab R/O @tab
+@code{RESERVED2}
+@tab @code{X} @tab 
+Reserved
+@item @code{16}
+@tab R/O @tab
+@code{DDR3_TRANS_DONE}
+@tab @code{X} @tab 
+DDR3 transfer status
+@item @code{31...17}
+@tab R/O @tab
+@code{RESERVED3}
+@tab @code{X} @tab 
+Reserved
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{fsm_state} @tab States:@*0: illegal@*1: IDLE@*2: PRE_TRIG@*3: WAIT_TRIG@*4: POST_TRIG@*5: DECR_SHOT@*6: illegal@*7: illegal
+@item @code{fsm_acq_done} @tab Values:@*0: in progress@*1: completed
+@item @code{reserved1} @tab Ignore on read, write with 0's
+@item @code{fc_trans_done} @tab Values:@*0: in progress@*1: completed
+@item @code{fc_full} @tab Values:@*0: not full@*1: full (data may be lost)
+@item @code{reserved2} @tab Ignore on read, write with 0's
+@item @code{ddr3_trans_done} @tab Values:@*0: in progress@*1: completed
+@item @code{reserved3} @tab Ignore on read, write with 0's
+@end multitable
+@regsection @code{trig_cfg} - Trigger configuration
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{HW_TRIG_SEL}
+@tab @code{0} @tab 
+Hardware trigger selection
+@item @code{1}
+@tab R/W @tab
+@code{HW_TRIG_POL}
+@tab @code{0} @tab 
+Hardware trigger polarity
+@item @code{2}
+@tab R/W @tab
+@code{HW_TRIG_EN}
+@tab @code{0} @tab 
+Hardware trigger enable
+@item @code{3}
+@tab R/W @tab
+@code{SW_TRIG_EN}
+@tab @code{0} @tab 
+Software trigger enable
+@item @code{8...4}
+@tab R/W @tab
+@code{INT_TRIG_SEL}
+@tab @code{0} @tab 
+Channel selection for internal trigger
+@item @code{31...9}
+@tab R/W @tab
+@code{RESERVED}
+@tab @code{0} @tab 
+Reserved
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{hw_trig_sel} @tab 0: internal (data threshold)@*1: external (front panel trigger input)
+@item @code{hw_trig_pol} @tab 0: positive edge/slope@*1: negative edge/slope
+@item @code{hw_trig_en} @tab 0: disable@*1: enable
+@item @code{sw_trig_en} @tab 0: disable@*1: enable
+@item @code{int_trig_sel} @tab 00: channel 1@*01: channel 2@*10: channel 3@*n: channel n+1
+@item @code{reserved} @tab Ignore on read, write with 0's
+@end multitable
+@regsection @code{trig_data_cfg} - Trigger data config threshold
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{7...0}
+@tab R/W @tab
+@code{THRES_FILT}
+@tab @code{0} @tab 
+Internal trigger threshold glitch filter
+@item @code{31...8}
+@tab R/W @tab
+@code{RESERVED}
+@tab @code{0} @tab 
+Reserved
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{thres_filt} @tab Configures the internal trigger threshold glitch filter length.
+@item @code{reserved} @tab Ignore on read, write with 0's
+@end multitable
+@regsection @code{trig_data_thres} - Trigger data threshold
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/W @tab
+@code{TRIG_DATA_THRES}
+@tab @code{0} @tab 
+Threshold for internal trigger
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{trig_data_thres} @tab Treated as binary two's complement and compared to the @*specified channel data
+@end multitable
+@regsection @code{trig_dly} - Trigger delay
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/W @tab
+@code{TRIG_DLY}
+@tab @code{0} @tab 
+Trigger delay value
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{trig_dly} @tab Delay to apply on the trigger in sampling clock period.@*The default clock frequency is 100MHz (period = 10ns).
+@end multitable
+@regsection @code{sw_trig} - Software trigger
+Writing (anything) to this register generates a software trigger.
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab W/O @tab
+@code{SW_TRIG}
+@tab @code{0} @tab 
+Software trigger (ignore on read)
+@end multitable
+@regsection @code{shots} - Number of shots
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/W @tab
+@code{NB}
+@tab @code{0} @tab 
+Number of shots
+@item @code{16}
+@tab R/O @tab
+@code{MULTISHOT_RAM_SIZE_IMPL}
+@tab @code{X} @tab 
+MultiShot RAM size implemented
+@item @code{31...17}
+@tab R/O @tab
+@code{MULTISHOT_RAM_SIZE}
+@tab @code{X} @tab 
+MultiShot RAM size
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{nb} @tab Number of shots required in multi-shot mode, set to one for single-shot mode.
+@item @code{multishot_ram_size_impl} @tab Set this bit to 1 if the multishot RAM size reg is implemented
+@item @code{multishot_ram_size} @tab Multishot RAM size
+@end multitable
+@regsection @code{trig_pos} - Trigger address register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{TRIG_POS}
+@tab @code{X} @tab 
+Trigger address
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{trig_pos} @tab Trigger address in DDR memory.@*Only used in single-shot mode.
+@end multitable
+@regsection @code{pre_samples} - Pre-trigger samples
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/W @tab
+@code{PRE_SAMPLES}
+@tab @code{0} @tab 
+Pre-trigger samples
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{pre_samples} @tab Number of requested pre-trigger samples
+@end multitable
+@regsection @code{post_samples} - Post-trigger samples
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/W @tab
+@code{POST_SAMPLES}
+@tab @code{0} @tab 
+Post-trigger samples
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{post_samples} @tab Number of requested post-trigger samples
+@end multitable
+@regsection @code{samples_cnt} - Samples counter
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{SAMPLES_CNT}
+@tab @code{X} @tab 
+Samples counter
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{samples_cnt} @tab Counts the number of samples.@* It is reset on START and then counts the number of pre-trigger + post-trigger samples
+@end multitable
+@regsection @code{ddr3_start_addr} - DDR3 Start Address
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/W @tab
+@code{DDR3_START_ADDR}
+@tab @code{0} @tab 
+DDR3 Start Address
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ddr3_start_addr} @tab Start address in DDR3 memory for the next acquisition.@*Must be word aligned (2 LSB zeroed)
+@end multitable
+@regsection @code{ddr3_end_addr} - DDR3 End Address
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/W @tab
+@code{DDR3_END_ADDR}
+@tab @code{0} @tab 
+DDR3 End Address
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ddr3_end_addr} @tab End address in DDR3 memory for the next acquisition.@*Must be word aligned (2 LSB zeroed)
+@end multitable
+@regsection @code{acq_chan_ctl} - Acquisition channel control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{4...0}
+@tab R/W @tab
+@code{WHICH}
+@tab @code{0} @tab 
+Acquisition channel selection
+@item @code{7...5}
+@tab R/W @tab
+@code{RESERVED}
+@tab @code{0} @tab 
+Reserved
+@item @code{12...8}
+@tab R/W @tab
+@code{DTRIG_WHICH}
+@tab @code{0} @tab 
+Data-driven channel selection
+@item @code{15...13}
+@tab R/W @tab
+@code{RESERVED1}
+@tab @code{0} @tab 
+Reserved1
+@item @code{20...16}
+@tab R/O @tab
+@code{NUM_CHAN}
+@tab @code{X} @tab 
+Number of acquisition channels
+@item @code{31...21}
+@tab R/W @tab
+@code{RESERVED2}
+@tab @code{0} @tab 
+Reserved2
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{which} @tab Selection of path to acquire on next acquisition.
+@item @code{reserved} @tab Ignore on read, write with 0's
+@item @code{dtrig_which} @tab Selection of path to detect data-driven trigger on next acquisition.
+@item @code{reserved1} @tab Ignore on read, write with 0's
+@item @code{num_chan} @tab Number of acquisition Channels
+@item @code{reserved2} @tab Ignore on read, write with 0's
+@end multitable
+@regsection @code{ch0_desc} - Channel 0 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch0_atom_desc} - Channel 0 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch1_desc} - Channel 1 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch1_atom_desc} - Channel 1 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch2_desc} - Channel 2 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch2_atom_desc} - Channel 2 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch3_desc} - Channel 3 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch3_atom_desc} - Channel 3 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch4_desc} - Channel 4 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch4_atom_desc} - Channel 4 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch5_desc} - Channel 5 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch5_atom_desc} - Channel 5 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch6_desc} - Channel 6 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch6_atom_desc} - Channel 6 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch7_desc} - Channel 7 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch7_atom_desc} - Channel 7 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch8_desc} - Channel 8 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch8_atom_desc} - Channel 8 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch9_desc} - Channel 9 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch9_atom_desc} - Channel 9 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch10_desc} - Channel 10 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch10_atom_desc} - Channel 10 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch11_desc} - Channel 11 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch11_atom_desc} - Channel 11 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch12_desc} - Channel 12 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch12_atom_desc} - Channel 12 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch13_desc} - Channel 13 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch13_atom_desc} - Channel 13 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch14_desc} - Channel 14 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch14_atom_desc} - Channel 14 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch15_desc} - Channel 15 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch15_atom_desc} - Channel 15 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch16_desc} - Channel 16 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch16_atom_desc} - Channel 16 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch17_desc} - Channel 17 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch17_atom_desc} - Channel 17 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch18_desc} - Channel 18 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch18_atom_desc} - Channel 18 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch19_desc} - Channel 19 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch19_atom_desc} - Channel 19 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch20_desc} - Channel 20 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch20_atom_desc} - Channel 20 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch21_desc} - Channel 21 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch21_atom_desc} - Channel 21 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch22_desc} - Channel 22 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch22_atom_desc} - Channel 22 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable
+@regsection @code{ch23_desc} - Channel 23 Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{INT_WIDTH}
+@tab @code{X} @tab 
+Channel Internal Width
+@item @code{31...16}
+@tab R/O @tab
+@code{NUM_COALESCE}
+@tab @code{X} @tab 
+Number of coalescing words
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{int_width} @tab Internal Channel Width (must multiply by the @* number of coalesced words to get the total width)
+@item @code{num_coalesce} @tab Number of coalescing words to form the complete user word
+@end multitable
+@regsection @code{ch23_atom_desc} - Channel 23 Atom Description
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{15...0}
+@tab R/O @tab
+@code{NUM_ATOMS}
+@tab @code{X} @tab 
+Number of atoms inside the complete data word (int_width*num_coalesce)
+@item @code{31...16}
+@tab R/O @tab
+@code{ATOM_WIDTH}
+@tab @code{X} @tab 
+Atom width
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{num_atoms} @tab Number of atoms inside the complete data word
+@item @code{atom_width} @tab Atom width in bits
+@end multitable

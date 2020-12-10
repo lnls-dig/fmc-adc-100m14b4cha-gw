@@ -1,0 +1,1252 @@
+@regsection Memory map summary
+@multitable  @columnfractions .10 .15 .15 .55
+@headitem Address @tab Type @tab Prefix @tab Name
+@item @code{0x0} @tab
+REG @tab
+@code{ch0_ctl} @tab
+Channel 0 Control
+@item @code{0x4} @tab
+REG @tab
+@code{ch0_dummy} @tab
+Channel 0 Dummy Register
+@item @code{0x8} @tab
+REG @tab
+@code{ch1_ctl} @tab
+Channel 1 Control
+@item @code{0xc} @tab
+REG @tab
+@code{ch1_dummy} @tab
+Channel 1 Dummy Register
+@item @code{0x10} @tab
+REG @tab
+@code{ch2_ctl} @tab
+Channel 2 Control
+@item @code{0x14} @tab
+REG @tab
+@code{ch2_dummy} @tab
+Channel 2 Dummy Register
+@item @code{0x18} @tab
+REG @tab
+@code{ch3_ctl} @tab
+Channel 3 Control
+@item @code{0x1c} @tab
+REG @tab
+@code{ch3_dummy} @tab
+Channel 3 Dummy Register
+@item @code{0x20} @tab
+REG @tab
+@code{ch4_ctl} @tab
+Channel 4 Control
+@item @code{0x24} @tab
+REG @tab
+@code{ch4_dummy} @tab
+Channel 4 Dummy Register
+@item @code{0x28} @tab
+REG @tab
+@code{ch5_ctl} @tab
+Channel 5 Control
+@item @code{0x2c} @tab
+REG @tab
+@code{ch5_dummy} @tab
+Channel 5 Dummy Register
+@item @code{0x30} @tab
+REG @tab
+@code{ch6_ctl} @tab
+Channel 6 Control
+@item @code{0x34} @tab
+REG @tab
+@code{ch6_dummy} @tab
+Channel 6 Dummy Register
+@item @code{0x38} @tab
+REG @tab
+@code{ch7_ctl} @tab
+Channel 7 Control
+@item @code{0x3c} @tab
+REG @tab
+@code{ch7_dummy} @tab
+Channel 7 Dummy Register
+@item @code{0x40} @tab
+REG @tab
+@code{ch8_ctl} @tab
+Channel 8 Control
+@item @code{0x44} @tab
+REG @tab
+@code{ch8_dummy} @tab
+Channel 8 Dummy Register
+@item @code{0x48} @tab
+REG @tab
+@code{ch9_ctl} @tab
+Channel 9 Control
+@item @code{0x4c} @tab
+REG @tab
+@code{ch9_dummy} @tab
+Channel 9 Dummy Register
+@item @code{0x50} @tab
+REG @tab
+@code{ch10_ctl} @tab
+Channel 10 Control
+@item @code{0x54} @tab
+REG @tab
+@code{ch10_dummy} @tab
+Channel 10 Dummy Register
+@item @code{0x58} @tab
+REG @tab
+@code{ch11_ctl} @tab
+Channel 11 Control
+@item @code{0x5c} @tab
+REG @tab
+@code{ch11_dummy} @tab
+Channel 11 Dummy Register
+@item @code{0x60} @tab
+REG @tab
+@code{ch12_ctl} @tab
+Channel 12 Control
+@item @code{0x64} @tab
+REG @tab
+@code{ch12_dummy} @tab
+Channel 12 Dummy Register
+@item @code{0x68} @tab
+REG @tab
+@code{ch13_ctl} @tab
+Channel 13 Control
+@item @code{0x6c} @tab
+REG @tab
+@code{ch13_dummy} @tab
+Channel 13 Dummy Register
+@item @code{0x70} @tab
+REG @tab
+@code{ch14_ctl} @tab
+Channel 14 Control
+@item @code{0x74} @tab
+REG @tab
+@code{ch14_dummy} @tab
+Channel 14 Dummy Register
+@item @code{0x78} @tab
+REG @tab
+@code{ch15_ctl} @tab
+Channel 15 Control
+@item @code{0x7c} @tab
+REG @tab
+@code{ch15_dummy} @tab
+Channel 15 Dummy Register
+@item @code{0x80} @tab
+REG @tab
+@code{ch16_ctl} @tab
+Channel 16 Control
+@item @code{0x84} @tab
+REG @tab
+@code{ch16_dummy} @tab
+Channel 16 Dummy Register
+@item @code{0x88} @tab
+REG @tab
+@code{ch17_ctl} @tab
+Channel 17 Control
+@item @code{0x8c} @tab
+REG @tab
+@code{ch17_dummy} @tab
+Channel 17 Dummy Register
+@item @code{0x90} @tab
+REG @tab
+@code{ch18_ctl} @tab
+Channel 18 Control
+@item @code{0x94} @tab
+REG @tab
+@code{ch18_dummy} @tab
+Channel 18 Dummy Register
+@item @code{0x98} @tab
+REG @tab
+@code{ch19_ctl} @tab
+Channel 19 Control
+@item @code{0x9c} @tab
+REG @tab
+@code{ch19_dummy} @tab
+Channel 19 Dummy Register
+@item @code{0xa0} @tab
+REG @tab
+@code{ch20_ctl} @tab
+Channel 20 Control
+@item @code{0xa4} @tab
+REG @tab
+@code{ch20_dummy} @tab
+Channel 20 Dummy Register
+@item @code{0xa8} @tab
+REG @tab
+@code{ch21_ctl} @tab
+Channel 21 Control
+@item @code{0xac} @tab
+REG @tab
+@code{ch21_dummy} @tab
+Channel 21 Dummy Register
+@item @code{0xb0} @tab
+REG @tab
+@code{ch22_ctl} @tab
+Channel 22 Control
+@item @code{0xb4} @tab
+REG @tab
+@code{ch22_dummy} @tab
+Channel 22 Dummy Register
+@item @code{0xb8} @tab
+REG @tab
+@code{ch23_ctl} @tab
+Channel 23 Control
+@item @code{0xbc} @tab
+REG @tab
+@code{ch23_dummy} @tab
+Channel 23 Dummy Register
+@end multitable 
+@regsection @code{ch0_ctl} - Channel 0 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch0_dummy} - Channel 0 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH0_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch0_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch1_ctl} - Channel 1 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch1_dummy} - Channel 1 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH1_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch1_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch2_ctl} - Channel 2 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch2_dummy} - Channel 2 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH2_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch2_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch3_ctl} - Channel 3 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch3_dummy} - Channel 3 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH3_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch3_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch4_ctl} - Channel 4 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch4_dummy} - Channel 4 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH4_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch4_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch5_ctl} - Channel 5 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch5_dummy} - Channel 5 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH5_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch5_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch6_ctl} - Channel 6 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch6_dummy} - Channel 6 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH6_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch6_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch7_ctl} - Channel 7 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch7_dummy} - Channel 7 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH7_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch7_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch8_ctl} - Channel 8 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch8_dummy} - Channel 8 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH8_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch8_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch9_ctl} - Channel 9 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch9_dummy} - Channel 9 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH9_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch9_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch10_ctl} - Channel 10 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch10_dummy} - Channel 10 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH10_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch10_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch11_ctl} - Channel 11 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch11_dummy} - Channel 11 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH11_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch11_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch12_ctl} - Channel 12 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch12_dummy} - Channel 12 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH12_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch12_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch13_ctl} - Channel 13 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch13_dummy} - Channel 13 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH13_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch13_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch14_ctl} - Channel 14 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch14_dummy} - Channel 14 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH14_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch14_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch15_ctl} - Channel 15 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch15_dummy} - Channel 15 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH15_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch15_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch16_ctl} - Channel 16 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch16_dummy} - Channel 16 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH16_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch16_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch17_ctl} - Channel 17 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch17_dummy} - Channel 17 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH17_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch17_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch18_ctl} - Channel 18 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch18_dummy} - Channel 18 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH18_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch18_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch19_ctl} - Channel 19 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch19_dummy} - Channel 19 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH19_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch19_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch20_ctl} - Channel 20 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch20_dummy} - Channel 20 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH20_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch20_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch21_ctl} - Channel 21 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch21_dummy} - Channel 21 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH21_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch21_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch22_ctl} - Channel 22 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch22_dummy} - Channel 22 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH22_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch22_dummy} @tab Dummy register
+@end multitable
+@regsection @code{ch23_ctl} - Channel 23 Control
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{0}
+@tab R/W @tab
+@code{RCV_SRC}
+@tab @code{0} @tab 
+Receiver Source
+@item @code{15...8}
+@tab R/W @tab
+@code{RCV_IN_SEL}
+@tab @code{0} @tab 
+Select Receiver Input
+@item @code{16}
+@tab R/W @tab
+@code{TRANSM_SRC}
+@tab @code{0} @tab 
+Transmitter Source
+@item @code{31...24}
+@tab R/W @tab
+@code{TRANSM_OUT_SEL}
+@tab @code{0} @tab 
+Select Transmitter Output
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{rcv_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{rcv_in_sel} @tab Select input that will be used by the receiver
+@item @code{transm_src} @tab 1 - Internal Signals@*0 - Triggers
+@item @code{transm_out_sel} @tab Select output that will be used by the transmitter
+@end multitable
+@regsection @code{ch23_dummy} - Channel 23 Dummy Register
+@multitable @columnfractions .10 .10 .15 .10 .55
+@headitem Bits @tab Access @tab Prefix @tab Default @tab Name
+@item @code{31...0}
+@tab R/O @tab
+@code{CH23_DUMMY}
+@tab @code{X} @tab 
+Dummy
+@end multitable
+@multitable @columnfractions 0.15 0.85
+@headitem Field @tab Description
+@item @code{ch23_dummy} @tab Dummy register
+@end multitable
