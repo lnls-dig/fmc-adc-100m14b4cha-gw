@@ -1,6 +1,6 @@
 #ifndef __CHEBY__AUX_TRIGOUT__H__
 #define __CHEBY__AUX_TRIGOUT__H__
-#define AUX_TRIGOUT_SIZE 20
+#define AUX_TRIGOUT_SIZE 20 /* 0x14 */
 
 /* Status register */
 #define AUX_TRIGOUT_STATUS 0x0UL

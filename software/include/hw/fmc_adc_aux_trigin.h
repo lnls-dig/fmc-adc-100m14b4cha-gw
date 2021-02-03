@@ -1,6 +1,6 @@
 #ifndef __CHEBY__AUX_TRIGIN__H__
 #define __CHEBY__AUX_TRIGIN__H__
-#define AUX_TRIGIN_SIZE 20
+#define AUX_TRIGIN_SIZE 20 /* 0x14 */
 
 /* Core version */
 #define AUX_TRIGIN_VERSION 0x0UL
