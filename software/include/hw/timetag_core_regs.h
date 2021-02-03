@@ -1,6 +1,6 @@
 #ifndef __CHEBY__TIMETAG_CORE_REGS__H__
 #define __CHEBY__TIMETAG_CORE_REGS__H__
-#define TIMETAG_CORE_REGS_SIZE 128
+#define TIMETAG_CORE_REGS_SIZE 128 /* 0x80 */
 
 /* Timetag seconds register (upper) */
 #define TIMETAG_CORE_REGS_SECONDS_UPPER 0x0UL

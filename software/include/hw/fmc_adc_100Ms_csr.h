@@ -1,6 +1,6 @@
 #ifndef __CHEBY__FMC_ADC_100MS_CSR__H__
 #define __CHEBY__FMC_ADC_100MS_CSR__H__
-#define FMC_ADC_100MS_CSR_SIZE 512
+#define FMC_ADC_100MS_CSR_SIZE 512 /* 0x200 */
 
 /* Control register */
 #define FMC_ADC_100MS_CSR_CTL 0x0UL
